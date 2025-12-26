@@ -68,6 +68,8 @@ class AuthService:
         user.reset_token_expiry = datetime.utcnow() + timedelta(seconds=Config.RESET_TOKEN_EXPIRY)
         self.user_repository.update(user)
 
+        # Send password reset email with token (omitted for brevity)
+
         return {"message": "Password reset link has been sent to your email", "status": 200}
 
     def reset_password(self, data: dict, token: str):
