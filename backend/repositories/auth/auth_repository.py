@@ -1,0 +1,9 @@
+from models.user import User
+from typing import Optional
+
+class AuthRepository:
+    def __init__(self):
+        self.users = []
+
+    def find_by_email(self, email: str) -> Optional[User]:
+        return next((user for user in self.users if user.email == email), None)
