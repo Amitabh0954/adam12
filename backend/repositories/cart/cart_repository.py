@@ -20,5 +20,5 @@ class CartRepository:
         else:
             self.cart_items = [cart_item if cart_item.id == item.id else item for item in self.cart_items]
 
-    def delete(self, cart_item_id: int) -> None:
-        self.cart_items = [item for item in self.cart_items if item.id != cart_item_id]
+    def delete(self, user_id: int, product_id: int) -> None:
+        self.cart_items = [item for item in self.cart_items if not (item.user_id == user_id and item.product_id == product_id)]
