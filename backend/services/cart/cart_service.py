@@ -59,3 +59,24 @@ class CartService:
         total_price = cart.calculate_total()
         
         return {"message": "Item removed from cart", "status": 200, "total_price": total_price}
+
+    def update_cart_item(self, user_id: int, data: dict):
+        if not user_id:
+            return {"message": "User is not logged in", "status": 401}
+        
+        product_id = data.get('product_id')
+        quantity = data.get('quantity')
+        
+        if not product_id or quantity <= 0:
+            return {"message": "Invalid quantity", "status": 400}
+
+        cart = self.cart_repository.find_by_user_id(user_id)
+        if not cart:
+            return {"message": "Cart is empty", "status": 200}
+        
+        cart.update_quantity(product_id, quantity)
+        self.cart_repository.save(cart)
+        
+        total_price = cart.calculate_total()
+        
+        return {"message": "Cart item quantity updated", "status": 200, "total_price": total_price}
