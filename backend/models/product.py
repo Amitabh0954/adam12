@@ -1,10 +1,7 @@
-from datetime import datetime
-
 class Product:
-    def __init__(self, name: str, price: float, description: str, category_id: int):
+    def __init__(self, id: int, name: str, description: str, price: float, category_id: int):
+        self.id = id
         self.name = name
-        self.price = price
         self.description = description
+        self.price = price
         self.category_id = category_id
-        self.created_at = datetime.utcnow()
-        self.updated_at = None
