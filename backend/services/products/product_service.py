@@ -1,6 +1,6 @@
 from repositories.products.product_repository import ProductRepository
 from models.product import Product
-from typing import Optional
+from typing import Optional, List
 
 class ProductService:
     def __init__(self):
@@ -45,3 +45,7 @@ class ProductService:
 
         self.product_repository.delete(product_id)
         return {"message": "Product deleted successfully", "status": 200}
+
+    def search_products(self, query: str, page: int, per_page: int):
+        results = self.product_repository.search(query, page, per_page)
+        return {"products": [{"id": product.id, "name": product.name, "description": product.description, "price": product.price} for product in results], "status": 200}
