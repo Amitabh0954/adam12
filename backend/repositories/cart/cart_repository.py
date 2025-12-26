@@ -1,19 +1,24 @@
-from models.cart import Cart
+from models.cart_item import CartItem
+from typing import Optional, List
 
 class CartRepository:
     def __init__(self):
-        self.carts = []
+        self.cart_items = []
+        self.next_id = 1
 
-    def find_by_user_id(self, user_id: int) -> Cart:
-        return next((cart for cart in self.carts if cart.user_id == user_id), None)
+    def find_all_by_user(self, user_id: int) -> List[CartItem]:
+        return [item for item in self.cart_items if item.user_id == user_id]
 
-    def save(self, cart: Cart) -> None:
-        self.carts.append(cart)
+    def find_by_user_and_product(self, user_id: int, product_id: int) -> Optional[CartItem]:
+        return next((item for item in self.cart_items if item.user_id == user_id and item.product_id == product_id), None)
 
-    def update(self, cart: Cart) -> None:
-        index = next((i for i, c in enumerate(self.carts) if c.user_id == cart.user_id), None)
-        if index is not None:
-            self.carts[index] = cart
-    
-    def delete(self, cart: Cart) -> None:
-        self.carts.remove(cart)
+    def save(self, cart_item: CartItem) -> None:
+        if cart_item.id is None:
+            cart_item.id = self.next_id
+            self.next_id += 1
+            self.cart_items.append(cart_item)
+        else:
+            self.cart_items = [cart_item if cart_item.id == item.id else item for item in self.cart_items]
+
+    def delete(self, cart_item_id: int) -> None:
+        self.cart_items = [item for item in self.cart_items if item.id != cart_item_id]
