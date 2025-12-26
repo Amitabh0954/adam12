@@ -1,5 +1,6 @@
 from repositories.products.product_repository import ProductRepository
 from models.product import Product
+from datetime import datetime
 
 class ProductService:
     def __init__(self):
@@ -22,3 +23,31 @@ class ProductService:
         self.product_repository.save(product)
         
         return {"message": "Product added to inventory", "status": 201}
+    
+    def update_product(self, product_id: int, data: dict):
+        product = self.product_repository.find_by_id(product_id)
+        if not product:
+            return {"message": "Product not found", "status": 404}
+        
+        name = data.get('name')
+        price = data.get('price')
+        description = data.get('description')
+        
+        if name:
+            existing_product = self.product_repository.find_by_name(name)
+            if existing_product:
+                return {"message": "Product name already exists", "status": 400}
+            product.name = name
+            
+        if price:
+            if price <= 0:
+                return {"message": "Invalid price", "status": 400}
+            product.price = price
+            
+        if description:
+            product.description = description
+        
+        product.updated_at = datetime.utcnow()
+        self.product_repository.update(product)
+        
+        return {"message": "Product details updated successfully", "status": 200}
