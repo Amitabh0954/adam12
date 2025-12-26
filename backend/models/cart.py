@@ -29,3 +29,7 @@ class ShoppingCart:
     def clear(self):
         self.items = []
         self.updated_at = datetime.utcnow()
+
+    def calculate_total(self):
+        total = sum(item.quantity * item.product_price for item in self.items)
+        return total
