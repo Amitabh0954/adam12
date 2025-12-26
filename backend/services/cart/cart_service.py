@@ -21,3 +21,11 @@ class CartService:
     def get_cart(self, user_id: int):
         cart_items = self.cart_repository.find_all_by_user(user_id)
         return {"cart_items": [{"id": item.id, "user_id": item.user_id, "product_id": item.product_id, "quantity": item.quantity} for item in cart_items], "status": 200}
+
+    def remove_from_cart(self, user_id: int, product_id: int):
+        cart_item = self.cart_repository.find_by_user_and_product(user_id, product_id)
+        if not cart_item:
+            return {"message": "Cart item not found", "status": 404}
+
+        self.cart_repository.delete(user_id, product_id)
+        return {"message": "Product removed from cart", "status": 200}
