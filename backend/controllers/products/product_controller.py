@@ -13,3 +13,12 @@ def add_product():
     category_id = data.get('category_id')
     response = product_service.add_product(name, description, price, category_id)
     return jsonify(response), response['status']
+
+@product_controller.route('/products/<int:product_id>', methods=['PUT'])
+def update_product(product_id: int):
+    data = request.get_json()
+    name = data.get('name', None)
+    description = data.get('description', None)
+    price = data.get('price', None)
+    response = product_service.update_product(product_id, name, description, price)
+    return jsonify(response), response['status']
