@@ -1,4 +1,6 @@
 CREATE TABLE category (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE
+    name TEXT NOT NULL UNIQUE,
+    parent_id INTEGER,
+    FOREIGN KEY (parent_id) REFERENCES category (id) ON DELETE CASCADE
 );
