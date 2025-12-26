@@ -1,19 +1,15 @@
 from models.cart import Cart
+from typing import List
 
 class CartRepository:
     def __init__(self):
-        self.carts = []
+        self.cart_items = []
 
-    def find_by_user_id(self, user_id: int) -> Cart:
-        return next((cart for cart in self.carts if cart.user_id == user_id), None)
+    def find_by_user_id(self, user_id: int) -> List[Cart]:
+        return [item for item in self.cart_items if item.user_id == user_id]
 
-    def save(self, cart: Cart) -> None:
-        self.carts.append(cart)
+    def save(self, cart_item: Cart) -> None:
+        self.cart_items.append(cart_item)
 
-    def update(self, cart: Cart) -> None:
-        index = next((i for i, c in enumerate(self.carts) if c.user_id == cart.user_id), None)
-        if index is not None:
-            self.carts[index] = cart
-    
-    def delete(self, cart: Cart) -> None:
-        self.carts.remove(cart)
+    def remove_item(self, user_id: int, product_id: int) -> None:
+        self.cart_items = [item for item in self.cart_items if not (item.user_id == user_id and item.product_id == product_id)]
