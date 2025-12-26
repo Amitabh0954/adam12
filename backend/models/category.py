@@ -5,4 +5,4 @@ class Category:
         self.name = name
         self.parent_id = parent_id
         self.created_at = datetime.utcnow()
-        self.updated_at = None
+        self.updated_at = datetime.utcnow()
