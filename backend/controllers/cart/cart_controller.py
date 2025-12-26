@@ -30,3 +30,9 @@ def update_cart_item():
     user_id = session.get('user_id')
     response = cart_service.update_cart_item(user_id, data)
     return jsonify(response), response['status']
+
+@cart_controller.route('/cart/save', methods=['POST'])
+def save_cart():
+    user_id = session.get('user_id')
+    response = cart_service.save_cart(user_id)
+    return jsonify(response), response['status']
