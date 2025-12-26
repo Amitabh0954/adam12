@@ -52,4 +52,16 @@ class ProductService:
         
         return {"message": "Product details updated successfully", "status": 200}
     
-    def delete_product(self, product
+    def delete_product(self, product_id: int):
+        product = self.product_repository.find_by_id(product_id)
+        if not product:
+            return {"message": "Product not found", "status": 404}
+        
+        self.product_repository.delete(product)
+        
+        return {"message": "Product removed from inventory", "status": 200}
+    
+    def search_products(self, query: str, page: int, per_page: int):
+        result = self.product_repository.search(query, page, per_page)
+        
+        return {"products": result['products'], "total_products": result['total_products'], "page": result['page'], "per_page": result['per_page'], "status": 200}
