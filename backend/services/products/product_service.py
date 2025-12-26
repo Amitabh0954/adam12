@@ -1,10 +1,13 @@
 from repositories.products.product_repository import ProductRepository
+from repositories.products.category_repository import CategoryRepository
 from models.product import Product
+from models.category import Category
 from datetime import datetime
 
 class ProductService:
     def __init__(self):
         self.product_repository = ProductRepository()
+        self.category_repository = CategoryRepository()
     
     def add_product(self, data: dict):
         name = data.get('name')
@@ -65,3 +68,52 @@ class ProductService:
         result = self.product_repository.search(query, page, per_page)
         
         return {"products": result['products'], "total_products": result['total_products'], "page": result['page'], "per_page": result['per_page'], "query": result['query'], "status": 200}
+
+    def add_category(self, data: dict):
+        name = data.get('name')
+        parent_id = data.get('parent_id')
+        
+        if not name:
+            return {"message": "Category name is required", "status": 400}
+        
+        existing_category = self.category_repository.find_by_name(name)
+        if existing_category:
+            return {"message": "Category name already exists", "status": 400}
+        
+        category = Category(name=name, parent_id=parent_id)
+        self.category_repository.save(category)
+        
+        return {"message": "Category added successfully", "status": 201}
+
+    def update_category(self, category_id: int, data: dict):
+        category = self.category_repository.find_by_id(category_id)
+        if not category:
+            return {"message": "Category not found", "status": 404}
+        
+        name = data.get('name')
+        parent_id = data.get('parent_id')
+        
+        if name:
+            existing_category = self.category_repository.find_by_name(name)
+            if existing_category:
+                return {"message": "Category name already exists", "status": 400}
+            category.name = name
+        
+        category.parent_id = parent_id
+        category.updated_at = datetime.utcnow()
+        self.category_repository.update(category)
+        
+        return {"message": "Category updated successfully", "status": 200}
+
+    def delete_category(self, category_id: int):
+        category = self.category_repository.find_by_id(category_id)
+        if not category:
+            return {"message": "Category not found", "status": 404}
+        
+        child_categories = self.category_repository.find_children(category_id)
+        if child_categories:
+            return {"message": "Cannot delete category with subcategories", "status": 400}
+        
+        self.category_repository.delete(category)
+        
+        return {"message": "Category deleted successfully", "status": 200}
