@@ -4,3 +4,4 @@ class Product:
         self.price = price
         self.description = description
         self.category_id = category_id
+        self.updated_at = None
