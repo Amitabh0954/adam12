@@ -17,3 +17,11 @@ def add_to_cart():
 def get_cart(user_id: int):
     response = cart_service.get_cart(user_id)
     return jsonify(response), response['status']
+
+@cart_controller.route('/cart', methods=['DELETE'])
+def remove_from_cart():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    product_id = data.get('product_id')
+    response = cart_service.remove_from_cart(user_id, product_id)
+    return jsonify(response), response['status']
