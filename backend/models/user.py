@@ -1,9 +1,6 @@
-from datetime import datetime
-import uuid
-
 class User:
-    def __init__(self, email: str, password: str):
-        self.id = str(uuid.uuid4())
+    def __init__(self, id: int, name: str, email: str):
+        self.id = id
+        self.name = name
         self.email = email
-        self.password = password  # In a real-world scenario, ensure password hashing
-        self.created_at = datetime.utcnow()
+        self.cart = None  # This will hold the user's cart state
