@@ -39,8 +39,8 @@ class ProductService:
                 return {"message": "Product name already exists", "status": 400}
             product.name = name
             
-        if price:
-            if price <= 0:
+        if price is not None:
+            if not isinstance(price, (int, float)) or price <= 0:
                 return {"message": "Invalid price", "status": 400}
             product.price = price
             
