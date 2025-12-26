@@ -12,4 +12,3 @@ class User:
         self.reset_token_expiry = None
         self.created_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
-        self.cart_state = None
