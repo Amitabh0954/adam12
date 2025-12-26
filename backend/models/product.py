@@ -8,3 +8,4 @@ class Product:
         self.category_id = category_id
         self.created_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
+        self.is_deleted = False
