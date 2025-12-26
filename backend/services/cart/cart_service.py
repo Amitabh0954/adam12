@@ -26,3 +26,11 @@ class CartService:
     def remove_from_cart(self, user_id: int, product_id: int):
         self.cart_repository.remove_item(user_id, product_id)
         return {"message": "Product removed from cart successfully", "status": 200}
+    
+    def modify_cart_quantity(self, user_id: int, product_id: int, quantity: int):
+        if quantity <= 0:
+            return {"message": "Quantity must be a positive number", "status": 400}
+        
+        cart_item = Cart(user_id=user_id, product_id=product_id, quantity=quantity)
+        self.cart_repository.save(cart_item)
+        return {"message": "Cart quantity updated successfully", "status": 200}
