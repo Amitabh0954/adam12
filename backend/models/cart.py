@@ -30,6 +30,12 @@ class ShoppingCart:
         self.items = []
         self.updated_at = datetime.utcnow()
 
+    def update_quantity(self, product_id: int, quantity: int):
+        item = next((i for i in self.items if i.product_id == product_id), None)
+        if item:
+            item.quantity = quantity
+        self.updated_at = datetime.utcnow()
+
     def calculate_total(self):
         total = sum(item.quantity * item.product_price for item in self.items)
         return total
