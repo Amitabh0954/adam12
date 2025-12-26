@@ -80,3 +80,15 @@ class CartService:
         total_price = cart.calculate_total()
         
         return {"message": "Cart item quantity updated", "status": 200, "total_price": total_price}
+
+    def save_cart(self, user_id: int):
+        if not user_id:
+            return {"message": "User is not logged in", "status": 401}
+
+        cart = self.cart_repository.find_by_user_id(user_id)
+        if not cart:
+            return {"message": "No cart to save", "status": 200}
+
+        self.cart_repository.save(cart)
+
+        return {"message": "Cart saved successfully", "status": 200}
