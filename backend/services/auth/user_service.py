@@ -26,3 +26,22 @@ class UserService:
         user = User(id=None, email=email, password=password)
         self.user_repository.save(user)
         return {"message": "User registered successfully", "status": 201, "user": {"id": user.id, "email": user.email}}
+
+    def login(self, email: str, password: str):
+        user = self.user_repository.find_by_email(email)
+        if not user:
+            return {"message": "Invalid email or password", "status": 400}
+        
+        if user.is_locked:
+            return {"message": "Account locked due to multiple failed login attempts", "status": 403}
+
+        if user.password != password:
+            user.login_attempts += 1
+            if user.login_attempts >= 5:
+                user.is_locked = True
+            self.user_repository.save(user)
+            return {"message": "Invalid email or password", "status": 400}
+
+        user.login_attempts = 0
+        self.user_repository.save(user)
+        return {"message": "Login successful", "status": 200, "user": {"id": user.id, "email": user.email}}
