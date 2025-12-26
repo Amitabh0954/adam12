@@ -9,6 +9,7 @@ from controllers.reviews.review_controller import review_controller
 from controllers.promotions.promotion_controller import promotion_controller
 from controllers.analytics.analytics_controller import analytics_controller
 from controllers.support.support_controller import support_controller
+from controllers.categories.category_controller import category_controller
 
 def create_app() -> Flask:
     app = Flask(__name__)
@@ -24,6 +25,7 @@ def create_app() -> Flask:
         app.register_blueprint(promotion_controller)
         app.register_blueprint(analytics_controller)
         app.register_blueprint(support_controller)
+        app.register_blueprint(category_controller)
     
     return app
 
