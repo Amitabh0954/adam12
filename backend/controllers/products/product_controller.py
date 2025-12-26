@@ -28,3 +28,20 @@ def search_products():
     per_page = request.args.get('per_page', 10, type=int)
     response = product_service.search_products(query, page, per_page)
     return jsonify(response), response['status']
+
+@product_controller.route('/categories', methods=['POST'])
+def add_category():
+    data = request.get_json()
+    response = product_service.add_category(data)
+    return jsonify(response), response['status']
+
+@product_controller.route('/categories/<int:category_id>', methods=['PUT'])
+def update_category(category_id: int):
+    data = request.get_json()
+    response = product_service.update_category(category_id, data)
+    return jsonify(response), response['status']
+
+@product_controller.route('/categories/<int:category_id>', methods=['DELETE'])
+def delete_category(category_id: int):
+    response = product_service.delete_category(category_id)
+    return jsonify(response), response['status']
