@@ -4,13 +4,8 @@ from services.user.user_service import UserService
 user_controller = Blueprint('user_controller', __name__)
 user_service = UserService()
 
-@user_controller.route('/user/<int:user_id>/cart', methods=['POST'])
-def save_cart_state(user_id: int):
+@user_controller.route('/profile', methods=['PUT'])
+def update_profile():
     data = request.get_json()
-    response = user_service.save_cart_state(user_id, data)
-    return jsonify(response), response['status']
-
-@user_controller.route('/user/<int:user_id>/cart', methods=['GET'])
-def retrieve_cart_state(user_id: int):
-    response = user_service.retrieve_cart_state(user_id)
+    response = user_service.update_profile(data)
     return jsonify(response), response['status']
