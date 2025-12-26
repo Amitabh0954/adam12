@@ -12,10 +12,12 @@ def add_to_cart():
 
 @cart_controller.route('/cart', methods=['GET'])
 def view_cart():
-    response = cart_service.view_cart()
+    user_id = request.args.get('user_id', type=int)
+    response = cart_service.view_cart(user_id)
     return jsonify(response), response['status']
 
 @cart_controller.route('/cart/<int:product_id>', methods=['DELETE'])
 def remove_from_cart(product_id: int):
-    response = cart_service.remove_from_cart(product_id)
+    user_id = request.args.get('user_id', type=int)
+    response = cart_service.remove_from_cart(user_id, product_id)
     return jsonify(response), response['status']
