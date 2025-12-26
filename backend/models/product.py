@@ -7,4 +7,4 @@ class Product:
         self.description = description
         self.category_id = category_id
         self.created_at = datetime.utcnow()
-        self.updated_at = None
+        self.updated_at = datetime.utcnow()
