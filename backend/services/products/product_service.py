@@ -1,55 +1,18 @@
 from repositories.products.product_repository import ProductRepository
 from models.product import Product
-from datetime import datetime
+from typing import Optional
 
 class ProductService:
     def __init__(self):
         self.product_repository = ProductRepository()
-    
-    def add_product(self, data: dict):
-        name = data.get('name')
-        price = data.get('price')
-        description = data.get('description')
-        category_id = data.get('category_id')
-        
-        if not name or not price or price <= 0 or not description or not category_id:
-            return {"message": "Invalid product data", "status": 400}
-        
-        existing_product = self.product_repository.find_by_name(name)
-        if existing_product:
+
+    def add_product(self, name: str, description: str, price: float, category_id: int):
+        if not name or not description or price is None or price <= 0:
+            return {"message": "Invalid product details", "status": 400}
+
+        if self.product_repository.find_by_name(name):
             return {"message": "Product name already exists", "status": 400}
-        
-        product = Product(name=name, price=price, description=description, category_id=category_id)
+
+        product = Product(id=None, name=name, description=description, price=price, category_id=category_id)
         self.product_repository.save(product)
-        
-        return {"message": "Product added to inventory", "status": 201}
-    
-    def update_product(self, product_id: int, data: dict):
-        product = self.product_repository.find_by_id(product_id)
-        if not product:
-            return {"message": "Product not found", "status": 404}
-        
-        name = data.get('name')
-        price = data.get('price')
-        description = data.get('description')
-        
-        if name:
-            existing_product = self.product_repository.find_by_name(name)
-            if existing_product:
-                return {"message": "Product name already exists", "status": 400}
-            product.name = name
-            
-        if price:
-            if price <= 0:
-                return {"message": "Invalid price", "status": 400}
-            product.price = price
-            
-        if description:
-            product.description = description
-        
-        product.updated_at = datetime.utcnow()
-        self.product_repository.update(product)
-        
-        return {"message": "Product details updated successfully", "status": 200}
-    
-    def delete_product(self, product
+        return {"message": "Product added successfully", "status": 201, "product": {"id": product.id, "name": product.name, "description": product.description, "price": product.price}}
