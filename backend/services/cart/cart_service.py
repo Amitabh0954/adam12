@@ -1,9 +1,11 @@
 from repositories.cart.cart_repository import CartRepository
+from repositories.products.product_repository import ProductRepository
 from models.cart import Cart
 
 class CartService:
     def __init__(self):
         self.cart_repository = CartRepository()
+        self.product_repository = ProductRepository()
     
     def add_to_cart(self, data: dict):
         user_id = data.get('user_id')
@@ -17,24 +19,14 @@ class CartService:
             cart = Cart(user_id=user_id)
             self.cart_repository.save(cart)
         
-        cart.add_item(product_id)
+        product = self.product_repository.find_by_id(product_id)
+        if not product:
+            return {"message": "Product not found", "status": 404}
+
+        cart.add_item(product)
         self.cart_repository.update(cart)
         
-        return {"message": "Product added to cart", "status": 200}
+        return {"message": "Product added to cart", "total_price": cart.total_price, "status": 200}
     
     def view_cart(self, user_id: int):
-        cart = self.cart_repository.find_by_user_id(user_id)
-        if not cart:
-            return {"message": "Cart not found", "status": 404}
-        
-        return {"cart": cart.items, "status": 200}
-    
-    def remove_from_cart(self, user_id: int, product_id: int):
-        cart = self.cart_repository.find_by_user_id(user_id)
-        if not cart:
-            return {"message": "Cart not found", "status": 404}
-        
-        cart.remove_item(product_id)
-        self.cart_repository.update(cart)
-        
-        return {"message": "Product
+        cart = self.cart_repository.find_by_user_id(user_id
