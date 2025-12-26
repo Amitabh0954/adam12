@@ -34,3 +34,12 @@ def reset_password():
     new_password = data.get('new_password')
     response = user_service.reset_password(token, new_password)
     return jsonify(response), response['status']
+
+@user_controller.route('/update-profile', methods=['PUT'])
+def update_profile():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    email = data.get('email', None)
+    new_password = data.get('new_password', None)
+    response = user_service.update_profile(user_id, email, new_password)
+    return jsonify(response), response['status']
