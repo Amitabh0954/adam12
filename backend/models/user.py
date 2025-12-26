@@ -1,15 +1,9 @@
 from datetime import datetime
-from werkzeug.security import generate_password_hash
+import uuid
 
 class User:
     def __init__(self, email: str, password: str):
+        self.id = str(uuid.uuid4())
         self.email = email
-        self.password = generate_password_hash(password)
-        self.login_attempts = 0
-        self.is_locked = False
-        self.last_login_at = None
-        self.reset_token = None
-        self.reset_token_expiry = None
+        self.password = password  # In a real-world scenario, ensure password hashing
         self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
-        self.cart_state = None
