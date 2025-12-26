@@ -1,0 +1,1 @@
+CREATE INDEX idx_product_search ON product (name, description);
