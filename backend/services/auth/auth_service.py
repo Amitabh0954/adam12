@@ -25,8 +25,6 @@ class AuthService:
         user = User(email=email, password=password)
         self.user_repository.save(user)
 
-        # Send verification email (omitted for brevity)
-
         return {"message": "User registered successfully. Please verify your email.", "status": 201}
 
     def login_user(self, data: dict):
@@ -69,8 +67,6 @@ class AuthService:
         user.reset_token = reset_token
         user.reset_token_expiry = datetime.utcnow() + timedelta(seconds=Config.RESET_TOKEN_EXPIRY)
         self.user_repository.update(user)
-
-        # Send password reset email with token (omitted for brevity)
 
         return {"message": "Password reset link has been sent to your email", "status": 200}
 
@@ -122,10 +118,10 @@ class AuthService:
             return False
         if not any(char.isdigit() for char in password):
             return False
-        if not any(char.lower() for char in password):
+        if not any(char.islower() for char in password):
             return False
-        if not any(char.upper() for char in password):
+        if not any(char.isupper() for char in password):
             return False
-        if not any char in "!@#$%^&*()_+-=[]{}|;:'\",.<>?/":
+        if not any(char in "!@#$%^&*()_+-=[]{}|;:'\",.<>?/"):
             return False
         return True
