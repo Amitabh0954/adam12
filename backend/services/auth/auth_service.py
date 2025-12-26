@@ -126,6 +126,6 @@ class AuthService:
             return False
         if not any(char.upper() for char in password):
             return False
-        if not any(char in "!@#$%^&*()_+-=[]{}|;:'\",.<>?/"):
+        if not any char in "!@#$%^&*()_+-=[]{}|;:'\",.<>?/":
             return False
         return True
