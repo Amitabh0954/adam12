@@ -11,3 +11,11 @@ def register():
     password = data.get('password')
     response = user_service.register(email, password)
     return jsonify(response), response['status']
+
+@user_controller.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+    response = user_service.login(email, password)
+    return jsonify(response), response['status']
