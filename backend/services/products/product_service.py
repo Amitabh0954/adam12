@@ -64,4 +64,4 @@ class ProductService:
     def search_products(self, query: str, page: int, per_page: int):
         result = self.product_repository.search(query, page, per_page)
         
-        return {"products": result['products'], "total_products": result['total_products'], "page": result['page'], "per_page": result['per_page'], "status": 200}
+        return {"products": result['products'], "total_products": result['total_products'], "page": result['page'], "per_page": result['per_page'], "query": result['query'], "status": 200}
