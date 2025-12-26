@@ -110,6 +110,7 @@ class AuthService:
             update_fields = True
 
         if update_fields:
+            user.updated_at = datetime.utcnow()
             self.user_repository.update(user)
             return {"message": "Profile updated successfully", "status": 200}
 
