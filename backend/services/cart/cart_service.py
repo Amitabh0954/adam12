@@ -1,9 +1,11 @@
 from repositories.cart.cart_repository import CartRepository
-from datetime import datetime
+from repositories.products.product_repository import ProductRepository
+from models.cart import ShoppingCart
 
 class CartService:
     def __init__(self):
         self.cart_repository = CartRepository()
+        self.product_repository = ProductRepository()
 
     def add_to_cart(self, user_id: int, data: dict):
         if not user_id:
@@ -15,6 +17,10 @@ class CartService:
         if not product_id or quantity <= 0:
             return {"message": "Invalid product data", "status": 400}
         
+        product = self.product_repository.find_by_id(product_id)
+        if not product:
+            return {"message": "Product not found", "status": 404}
+
         cart = self.cart_repository.find_by_user_id(user_id)
         if not cart:
             cart = ShoppingCart(user_id)
@@ -50,4 +56,6 @@ class CartService:
         cart.remove_item(product_id)
         self.cart_repository.save(cart)
         
-        return {"message": "Item removed from cart", "status": 200}
+        total_price = cart.calculate_total()
+        
+        return {"message": "Item removed from cart", "status": 200, "total_price": total_price}
