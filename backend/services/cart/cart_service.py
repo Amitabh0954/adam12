@@ -29,3 +29,15 @@ class CartService:
 
         self.cart_repository.delete(user_id, product_id)
         return {"message": "Product removed from cart", "status": 200}
+    
+    def update_cart_item(self, user_id: int, product_id: int, quantity: int):
+        if quantity <= 0:
+            return {"message": "Quantity must be a positive integer", "status": 400}
+
+        cart_item = self.cart_repository.find_by_user_and_product(user_id, product_id)
+        if not cart_item:
+            return {"message": "Cart item not found", "status": 404}
+
+        cart_item.quantity = quantity
+        self.cart_repository.save(cart_item)
+        return {"message": "Cart item updated successfully", "status": 200, "cart_item": {"id": cart_item.id, "user_id": cart_item.user_id, "product_id": cart_item.product_id, "quantity": cart_item.quantity}}
