@@ -37,3 +37,23 @@ class Cart:
                 self.total_price += item.product.price * item.quantity
                 break
         self.updated_at = datetime.utcnow()
+    
+    def get_state(self):
+        return {
+            "user_id": self.user_id,
+            "items": [
+                {"product_id": item.product.id, "quantity": item.quantity}
+                for item in self.items
+            ],
+            "total_price": self.total_price
+        }
+    
+    def set_state(self, state: dict, product_repository):
+        self.user_id = state["user_id"]
+        self.total_price = state["total_price"]
+        self.items = []
+        for item in state["items"]:
+            product = product_repository.find_by_id(item["product_id"])
+            if product:
+                self.items.append(CartItem(product, item["quantity"]))
+        self.updated_at = datetime.utcnow()
