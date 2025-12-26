@@ -19,3 +19,18 @@ def login():
     password = data.get('password')
     response = user_service.login(email, password)
     return jsonify(response), response['status']
+
+@user_controller.route('/forgot-password', methods=['POST'])
+def forgot_password():
+    data = request.get_json()
+    email = data.get('email')
+    response = user_service.forgot_password(email)
+    return jsonify(response), response['status']
+
+@user_controller.route('/reset-password', methods=['POST'])
+def reset_password():
+    data = request.get_json()
+    token = data.get('token')
+    new_password = data.get('new_password')
+    response = user_service.reset_password(token, new_password)
+    return jsonify(response), response['status']
