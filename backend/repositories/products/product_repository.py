@@ -15,6 +15,12 @@ class ProductRepository:
     def find_by_name(self, name: str) -> Optional[Product]:
         return next((product for product in self.products if product.name == name), None)
 
+    def search(self, query: str, page: int, per_page: int) -> List[Product]:
+        results = [product for product in self.products if query.lower() in product.name.lower() or query.lower() in product.description.lower()]
+        start = (page - 1) * per_page
+        end = start + per_page
+        return results[start:end]
+
     def save(self, product: Product) -> None:
         if product.id is None:
             product.id = self.next_id
