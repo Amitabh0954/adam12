@@ -1,8 +1,6 @@
-from datetime import datetime
-
 class Category:
-    def __init__(self, name: str, parent_id: int = None):
+    def __init__(self, id: int, name: str, description: str = '', parent_id: int = None):
+        self.id = id
         self.name = name
+        self.description = description
         self.parent_id = parent_id
-        self.created_at = datetime.utcnow()
-        self.updated_at = None
