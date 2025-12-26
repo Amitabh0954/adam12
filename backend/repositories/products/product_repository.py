@@ -22,3 +22,6 @@ class ProductRepository:
             self.products.append(product)
         else:
             self.products = [product if product.id == p.id else p for p in self.products]
+
+    def delete(self, product_id: int) -> None:
+        self.products = [product for product in self.products if product.id != product_id]
