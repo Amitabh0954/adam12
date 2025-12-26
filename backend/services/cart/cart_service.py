@@ -1,3 +1,53 @@
 from repositories.cart.cart_repository import CartRepository
-from repositories.products.product_repository import ProductRepository
-from
+from datetime import datetime
+
+class CartService:
+    def __init__(self):
+        self.cart_repository = CartRepository()
+
+    def add_to_cart(self, user_id: int, data: dict):
+        if not user_id:
+            return {"message": "User is not logged in", "status": 401}
+        
+        product_id = data.get('product_id')
+        quantity = data.get('quantity')
+        
+        if not product_id or quantity <= 0:
+            return {"message": "Invalid product data", "status": 400}
+        
+        cart = self.cart_repository.find_by_user_id(user_id)
+        if not cart:
+            cart = ShoppingCart(user_id)
+        
+        cart.add_item(product_id, quantity)
+        self.cart_repository.save(cart)
+        
+        return {"message": "Product added to cart", "status": 200}
+
+    def view_cart(self, user_id: int):
+        if not user_id:
+            return {"message": "User is not logged in", "status": 401}
+
+        cart = self.cart_repository.find_by_user_id(user_id)
+        if not cart:
+            return {"message": "Cart is empty", "status": 200, "cart": []}
+
+        cart_view = [{"product_id": item.product_id, "quantity": item.quantity, "added_at": item.added_at} for item in cart.items]
+        return {"message": "Cart retrieved successfully", "status": 200, "cart": cart_view}
+
+    def remove_from_cart(self, user_id: int, data: dict):
+        if not user_id:
+            return {"message": "User is not logged in", "status": 401}
+        
+        product_id = data.get('product_id')
+        if not product_id:
+            return {"message": "Invalid product id", "status": 400}
+        
+        cart = self.cart_repository.find_by_user_id(user_id)
+        if not cart:
+            return {"message": "Cart is empty", "status": 200}
+        
+        cart.remove_item(product_id)
+        self.cart_repository.save(cart)
+        
+        return {"message": "Item removed from cart", "status": 200}
