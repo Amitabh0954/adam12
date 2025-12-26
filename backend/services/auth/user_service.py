@@ -1,0 +1,28 @@
+from repositories.auth.user_repository import UserRepository
+from models.user import User
+from typing import Optional
+import re
+
+class UserService:
+    def __init__(self):
+        self.user_repository = UserRepository()
+
+    def register(self, email: str, password: str):
+        if not email or not password:
+            return {"message": "Email and password are required", "status": 400}
+        
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            return {"message": "Invalid email format", "status": 400}
+        
+        if len(password) < 8 or not any(char.isdigit() for char in password) or not any(char.isupper() for char in password):
+            return {
+                "message": "Password must be at least 8 characters long, contain at least one number and one uppercase letter",
+                "status": 400
+            }
+
+        if self.user_repository.find_by_email(email):
+            return {"message": "Email is already registered", "status": 400}
+
+        user = User(id=None, email=email, password=password)
+        self.user_repository.save(user)
+        return {"message": "User registered successfully", "status": 201, "user": {"id": user.id, "email": user.email}}
