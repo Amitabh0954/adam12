@@ -57,7 +57,6 @@ class UserService:
         token = str(uuid.uuid4())
         expiry_time = datetime.utcnow() + timedelta(hours=24)
         self.reset_tokens[token] = {"email": email, "expiry_time": expiry_time}
-        # Here, an actual email should be sent containing the reset link with the token
         return {"message": "Password reset link has been sent to your email", "status": 200, "token": token}
 
     def reset_password(self, token: str, new_password: str):
@@ -81,3 +80,26 @@ class UserService:
         self.user_repository.save(user)
         del self.reset_tokens[token]
         return {"message": "Password has been reset successfully", "status": 200}
+
+    def update_profile(self, user_id: int, email: Optional[str], new_password: Optional[str]):
+        user = self.user_repository.find_by_id(user_id)
+        if not user:
+            return {"message": "User not found", "status": 404}
+
+        if email is not None:
+            if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                return {"message": "Invalid email format", "status": 400}
+            if self.user_repository.find_by_email(email) and self.user_repository.find_by_email(email).id != user_id:
+                return {"message": "Email is already registered", "status": 400}
+            user.email = email
+        
+        if new_password is not None:
+            if len(new_password) < 8 or not any(char.isdigit() for char in new_password) or not any(char.isupper() for char in new_password):
+                return {
+                    "message": "Password must be at least 8 characters long, contain at least one number and one uppercase letter",
+                    "status": 400
+                }
+            user.password = new_password
+
+        self.user_repository.save(user)
+        return {"message": "Profile updated successfully", "status": 200, "user": {"id": user.id, "email": user.email}}
