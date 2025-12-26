@@ -60,3 +60,31 @@ class ProductService:
         self.product_repository.delete(product)
         
         return {"message": "Product deleted successfully", "status": 200}
+    
+    def search_products(self, query: str, page: int, per_page: int):
+        result = self.product_repository.search(query, page, per_page)
+        total_products = result["total_products"]
+        products = result["products"]
+        highlighted_products = [
+            {
+                "name": product.name,
+                "price": product.price,
+                "description": self.highlight_query(product.description, query),
+                "category_id": product.category_id,
+                "created_at": product.created_at,
+                "updated_at": product.updated_at
+            }
+            for product in products
+        ]
+        
+        return {
+            "products": highlighted_products,
+            "total_products": total_products,
+            "page": page,
+            "per_page": per_page,
+            "status": 200
+        }
+    
+    @staticmethod
+    def highlight_query(text: str, query: str) -> str:
+        return text.replace(query, f"<mark>{query}</mark>")
