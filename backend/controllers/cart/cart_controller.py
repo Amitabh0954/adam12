@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify
 from services.cart.cart_service import CartService
 
 cart_controller = Blueprint('cart_controller', __name__)
