@@ -15,6 +15,14 @@ def create_app() -> Flask:
     app = Flask(__name__)
     app.config.from_object(Config)
 
+    @app.route("/")
+    def health():
+        return {
+            "status": "ok",
+            "service": "adam12-8",
+            "message": "API is running"
+        }
+
     app.register_blueprint(auth_controller)
     app.register_blueprint(product_controller)
     app.register_blueprint(cart_controller)
@@ -28,9 +36,8 @@ def create_app() -> Flask:
     return app
 
 
-# 🔑 THIS LINE IS REQUIRED FOR GUNICORN
+# Required for Gunicorn
 app = create_app()
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
