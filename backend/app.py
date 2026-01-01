@@ -10,6 +10,7 @@ from controllers.promotions.promotion_controller import promotion_controller
 from controllers.analytics.analytics_controller import analytics_controller
 from controllers.support.support_controller import support_controller
 
+
 def create_app() -> Flask:
     app = Flask(__name__)
     app.config.from_object(Config)
@@ -26,6 +27,10 @@ def create_app() -> Flask:
 
     return app
 
+
+# 🔑 THIS LINE IS REQUIRED FOR GUNICORN
+app = create_app()
+
+
 if __name__ == "__main__":
-    app = create_app()
     app.run(host="0.0.0.0", port=5000)
