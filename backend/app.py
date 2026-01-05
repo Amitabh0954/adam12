@@ -18,7 +18,7 @@ def create_app() -> Flask:
     @app.route("/")
     def health():
         return {
-            "status": "ok",
+            "status": "working",
             "service": "adam12-8",
             "message": "API is running"
         }
