@@ -2,6 +2,7 @@ from flask import Flask, session
 from backend.config.config import Config
 from backend.controllers.auth.registration_controller import registration_bp
 from backend.controllers.auth.login_controller import login_bp
+from backend.controllers.auth.password_reset_controller import password_reset_bp
 
 def create_app():
     app = Flask(__name__)
@@ -10,6 +11,7 @@ def create_app():
 
     app.register_blueprint(registration_bp, url_prefix='/api/auth')
     app.register_blueprint(login_bp, url_prefix='/api/auth')
+    app.register_blueprint(password_reset_bp, url_prefix='/api/auth')
 
     @app.before_request
     def make_session_permanent():
