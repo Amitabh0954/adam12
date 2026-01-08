@@ -1,19 +1,12 @@
-from models.cart import Cart
+from typing import Optional
+from backend.models.cart.shopping_cart import ShoppingCart
 
 class CartRepository:
     def __init__(self):
-        self.carts = []
+        self.carts = {}
 
-    def find_by_user_id(self, user_id: int) -> Cart:
-        return next((cart for cart in self.carts if cart.user_id == user_id), None)
+    def load_cart(self, user_id: int) -> ShoppingCart:
+        return self.carts.get(user_id, ShoppingCart(user_id=user_id))
 
-    def save(self, cart: Cart) -> None:
-        self.carts.append(cart)
-
-    def update(self, cart: Cart) -> None:
-        index = next((i for i, c in enumerate(self.carts) if c.user_id == cart.user_id), None)
-        if index is not None:
-            self.carts[index] = cart
-    
-    def delete(self, cart: Cart) -> None:
-        self.carts.remove(cart)
+    def save_cart(self, cart: ShoppingCart):
+        self.carts[cart.user_id] = cart
