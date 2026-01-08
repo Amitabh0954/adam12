@@ -12,6 +12,7 @@ from backend.controllers.categories.category_controller import category_bp
 from backend.controllers.cart.cart_controller import cart_bp
 from backend.controllers.cart.remove_cart_item_controller import remove_cart_item_bp
 from backend.controllers.cart.modify_cart_item_controller import modify_cart_item_bp
+from backend.controllers.cart.save_cart_controller import save_cart_bp
 
 def create_app():
     app = Flask(__name__)
@@ -30,6 +31,7 @@ def create_app():
     app.register_blueprint(cart_bp, url_prefix='/api')
     app.register_blueprint(remove_cart_item_bp, url_prefix='/api')
     app.register_blueprint(modify_cart_item_bp, url_prefix='/api')
+    app.register_blueprint(save_cart_bp, url_prefix='/api')
 
     @app.before_request
     def make_session_permanent():
