@@ -1,20 +1,41 @@
-# config/config.py
+from flask import Flask
 import os
-from dotenv import load_dotenv
 
-load_dotenv()  # reads .env if present
+from config.config import Config
+from controllers.auth.auth_controller import auth_controller
+from controllers.products.product_controller import product_controller
+from controllers.cart.cart_controller import cart_controller
+from controllers.checkout.checkout_controller import checkout_controller
+from controllers.orders.order_controller import order_controller
+from controllers.reviews.review_controller import review_controller
+from controllers.promotions.promotion_controller import promotion_controller
+from controllers.analytics.analytics_controller import analytics_controller
+from controllers.support.support_controller import support_controller
 
-class Config:
-    APP_NAME = os.getenv("APP_NAME", "FlaskApp")
-    ENV = os.getenv("FLASK_ENV", "development")
-    DEBUG = os.getenv("DEBUG", "false").lower() == "true"
-    SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret")
 
-    DATABASE_URL = os.getenv("DATABASE_URL")
+def create_app() -> Flask:
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-    BASE_FILE_PATH = os.getenv("BASE_FILE_PATH", "/tmp")
-    LOG_PATH = os.getenv("LOG_PATH", "/tmp")
+    with app.app_context():
+        app.register_blueprint(auth_controller)
+        app.register_blueprint(product_controller)
+        app.register_blueprint(cart_controller)
+        app.register_blueprint(checkout_controller)
+        app.register_blueprint(order_controller)
+        app.register_blueprint(review_controller)
+        app.register_blueprint(promotion_controller)
+        app.register_blueprint(analytics_controller)
+        app.register_blueprint(support_controller)
 
-    JWT_SECRET = os.getenv("JWT_SECRET")
-    PAYMENT_GATEWAY_KEY = os.getenv("PAYMENT_GATEWAY_KEY")
-    ANALYTICS_KEY = os.getenv("ANALYTICS_KEY")
+    return app
+
+
+if __name__ == "__main__":
+    app = create_app()
+
+    host = os.getenv("APP_HOST", "0.0.0.0")
+    port = int(os.getenv("APP_PORT", 5000))
+    debug = os.getenv("DEBUG", "false").lower() == "true"
+
+    app.run(host=host, port=port, debug=debug)
