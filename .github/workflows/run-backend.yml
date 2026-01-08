@@ -1,6 +1,11 @@
 name: Run Backend App
 on:
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run'
+        required: false
+        default: 'main5'
 
 jobs:
   run-app:
@@ -9,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          ref: main
+          ref: main5
       
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -24,4 +29,4 @@ jobs:
       - name: Run app.py
         run: |
           cd backend
-          python app.py
+          timeout 300 python app.py || true
