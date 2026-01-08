@@ -5,6 +5,7 @@ from backend.controllers.auth.login_controller import login_bp
 from backend.controllers.auth.password_reset_controller import password_reset_bp
 from backend.controllers.auth.profile_controller import profile_bp
 from backend.controllers.products.product_controller import product_bp
+from backend.controllers.products.update_product_controller import update_product_bp
 
 def create_app():
     app = Flask(__name__)
@@ -16,6 +17,7 @@ def create_app():
     app.register_blueprint(password_reset_bp, url_prefix='/api/auth')
     app.register_blueprint(profile_bp, url_prefix='/api/auth')
     app.register_blueprint(product_bp, url_prefix='/api')
+    app.register_blueprint(update_product_bp, url_prefix='/api')
 
     @app.before_request
     def make_session_permanent():
