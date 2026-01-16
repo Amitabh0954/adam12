@@ -27,6 +27,9 @@ def add_to_cart():
     if product is None:
         return jsonify({'error': 'Product not found'}), 404
 
+    if quantity <= 0:
+        return jsonify({'error': 'Quantity must be a positive integer'}), 400
+
     cart = get_cart()
     cart_item = CartItem.query.filter_by(cart_id=cart.id, product_id=product_id).first()
     if cart_item:
@@ -52,12 +55,32 @@ def remove_from_cart():
     if cart_item is None:
         return jsonify({'error': 'Product not found in cart'}), 404
 
-    # This section is where the confirmation would typically take place
-    # For simplicity, we are assuming confirmation is handled client-side
     db.session.delete(cart_item)
     db.session.commit()
 
     return jsonify({'message': 'Product removed from cart'}), 200
+
+@cart_bp.route('/modify-cart-item', methods=['POST'])
+def modify_cart_item():
+    data = request.get_json()
+    product_id = data.get('product_id')
+    quantity = data.get('quantity')
+
+    if not product_id or quantity is None:
+        return jsonify({'error': 'Product ID and quantity are required'}), 400
+
+    if quantity <= 0:
+        return jsonify({'error': 'Quantity must be a positive integer'}), 400
+
+    cart = get_cart()
+    cart_item = CartItem.query.filter_by(cart_id=cart.id, product_id=product_id).first()
+    if cart_item is None:
+        return jsonify({'error': 'Product not found in cart'}), 404
+
+    cart_item.quantity = quantity
+    db.session.commit()
+
+    return jsonify({'message': 'Product quantity updated'}), 200
 
 @cart_bp.route('/cart-total', methods=['GET'])
 def cart_total():
