@@ -23,11 +23,19 @@ CREATE TABLE profile (
     FOREIGN KEY(user_id) REFERENCES user(id)
 );
 
+CREATE TABLE category (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE,
+    parent_id INTEGER,
+    FOREIGN KEY(parent_id) REFERENCES category(id)
+);
+
 CREATE TABLE product (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL UNIQUE,
     price REAL NOT NULL,
     description TEXT NOT NULL,
-    category TEXT,
-    is_deleted BOOLEAN NOT NULL DEFAULT 0
+    category_id INTEGER NOT NULL,
+    is_deleted BOOLEAN NOT NULL DEFAULT 0,
+    FOREIGN KEY(category_id) REFERENCES category(id)
 );
