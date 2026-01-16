@@ -23,3 +23,6 @@ class CartItem(db.Model):
         self.cart_id = cart_id
         self.product_id = product_id
         self.quantity = quantity
+
+    def get_total_price(self) -> float:
+        return self.quantity * self.product.price
