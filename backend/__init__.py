@@ -8,6 +8,7 @@ from backend.profile.models import db as profile_db
 from backend.profile.views import profile_bp
 from backend.product.catalog.models import db as catalog_db
 from backend.product.catalog.views import catalog_bp
+from backend.product.search.views import search_bp
 
 def create_app() -> Flask:
     app = Flask(__name__)
@@ -34,5 +35,6 @@ def create_app() -> Flask:
     app.register_blueprint(account_bp, url_prefix='/account')
     app.register_blueprint(profile_bp, url_prefix='/profile')
     app.register_blueprint(catalog_bp, url_prefix='/catalog')
+    app.register_blueprint(search_bp, url_prefix='/catalog')
 
     return app
