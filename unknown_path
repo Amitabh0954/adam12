@@ -1,7 +1,7 @@
-To implement functionality for updating existing product details, you will need to:
+The task is to add functionality for deleting products, ensuring that only admins can perform deletions and that deleted products don't appear in the catalog. We will create:
 
-1. Create a view to handle product updates in the `catalog` section.
-2. Ensure that only an admin can perform updates.
-3. Validate that the price is numeric and any modifications to the product description allow it to be updated but not removed.
+1. A view to handle product deletions.
+2. A mechanism to confirm deletions.
+3. Functionality to ensure only admins can delete products.
 
-Let's proceed accordingly to add this functionality:
+Let's proceed accordingly:
