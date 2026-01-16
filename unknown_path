@@ -1,7 +1,7 @@
-To implement the functionality for modifying the quantity of products in the shopping cart, we need to:
+To implement saving the cart state for logged-in users, we need to:
 
-1. Develop the view to handle updating the quantity of cart items.
-2. Ensure that the quantity is a positive integer.
-3. Recalculate the total price after the quantity is updated.
+1. Update the Cart model to associate it with a user.
+2. Modify the views to handle saving and retrieving cart state for logged-in users.
+3. Ensure that the cart state is persistent across sessions for logged-in users.
 
-Let's proceed with the implementation.
+We'll focus on the `cart` section under the `backend` folder for these implementations.
