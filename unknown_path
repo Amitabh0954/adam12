@@ -1,7 +1,7 @@
-To implement password recovery featuring password reset links expiring after 24 hours and email verification, additional modifications are needed. We will add:
+To implement functionality for updating existing product details, you will need to:
 
-1. A model to store password reset tokens.
-2. Views to handle request and validation of password resets.
-3. Update the `create_app` to include mail functionality.
+1. Create a view to handle product updates in the `catalog` section.
+2. Ensure that only an admin can perform updates.
+3. Validate that the price is numeric and any modifications to the product description allow it to be updated but not removed.
 
-Let's proceed accordingly.
+Let's proceed accordingly to add this functionality:
