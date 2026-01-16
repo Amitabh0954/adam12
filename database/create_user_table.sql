@@ -28,6 +28,5 @@ CREATE TABLE product (
     name TEXT NOT NULL UNIQUE,
     price REAL NOT NULL,
     description TEXT NOT NULL,
-    category TEXT,
-    is_deleted BOOLEAN NOT NULL DEFAULT 0
+    category TEXT
 );
