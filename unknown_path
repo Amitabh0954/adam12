@@ -1,7 +1,7 @@
-To implement the functionality for removing items from the shopping cart and updating the total price, we need to:
+To implement the functionality for modifying the quantity of products in the shopping cart, we need to:
 
-1. Develop the view to handle the removal of items from the shopping cart.
-2. Ensure users see a confirmation before the item is removed.
-3. Update the total price after the item is removed.
+1. Develop the view to handle updating the quantity of cart items.
+2. Ensure that the quantity is a positive integer.
+3. Recalculate the total price after the quantity is updated.
 
-Let's proceed with the necessary steps.
+Let's proceed with the implementation.
