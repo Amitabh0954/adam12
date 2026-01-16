@@ -1,0 +1,3 @@
+Based on the provided folder structure and user story, I will generate the necessary files to implement user registration in an eCommerce management system.
+
+I will start by creating the `User` model and the account registration view. Any dependencies introduced will adhere to the folder structure provided.
