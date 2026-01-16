@@ -38,3 +38,29 @@ def add_to_cart():
         db.session.commit()
 
     return jsonify({'message': 'Product added to cart'}), 201
+
+@cart_bp.route('/remove-from-cart', methods=['POST'])
+def remove_from_cart():
+    data = request.get_json()
+    product_id = data.get('product_id')
+
+    if not product_id:
+        return jsonify({'error': 'Product ID is required'}), 400
+
+    cart = get_cart()
+    cart_item = CartItem.query.filter_by(cart_id=cart.id, product_id=product_id).first()
+    if cart_item is None:
+        return jsonify({'error': 'Product not found in cart'}), 404
+
+    # This section is where the confirmation would typically take place
+    # For simplicity, we are assuming confirmation is handled client-side
+    db.session.delete(cart_item)
+    db.session.commit()
+
+    return jsonify({'message': 'Product removed from cart'}), 200
+
+@cart_bp.route('/cart-total', methods=['GET'])
+def cart_total():
+    cart = get_cart()
+    total_price = sum(item.get_total_price() for item in cart.items)
+    return jsonify({'total_price': total_price}), 200
