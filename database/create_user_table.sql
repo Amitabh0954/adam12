@@ -22,11 +22,3 @@ CREATE TABLE profile (
     preferences JSON,
     FOREIGN KEY(user_id) REFERENCES user(id)
 );
-
-CREATE TABLE product (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE,
-    price REAL NOT NULL,
-    description TEXT NOT NULL,
-    category TEXT
-);
