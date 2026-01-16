@@ -1,18 +1,30 @@
 from flask import Blueprint, request, jsonify, session
 from backend.cart.models import db, Cart, CartItem
 from backend.product.catalog.models import Product
+from backend.account.models import User
 
 cart_bp = Blueprint('cart', __name__)
 
 def get_cart() -> Cart:
-    if 'cart_id' in session:
-        return Cart.query.get(session['cart_id'])
+    user_id = session.get('user_id')
+    if user_id:
+        cart = Cart.query.filter_by(user_id=user_id).first()
+        if cart:
+            return cart
+        else:
+            new_cart = Cart(user_id=user_id)
+            db.session.add(new_cart)
+            db.session.commit()
+            return new_cart
     else:
-        new_cart = Cart()
-        db.session.add(new_cart)
-        db.session.commit()
-        session['cart_id'] = new_cart.id
-        return new_cart
+        if 'cart_id' in session:
+            return Cart.query.get(session['cart_id'])
+        else:
+            new_cart = Cart()
+            db.session.add(new_cart)
+            db.session.commit()
+            session['cart_id'] = new_cart.id
+            return new_cart
 
 @cart_bp.route('/add-to-cart', methods=['POST'])
 def add_to_cart():
