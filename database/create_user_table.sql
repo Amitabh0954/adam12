@@ -4,3 +4,12 @@ CREATE TABLE user (
     email TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL
 );
+
+CREATE TABLE password_reset_token (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    token TEXT NOT NULL UNIQUE,
+    user_id INTEGER NOT NULL,
+    created_at DATETIME NOT NULL,
+    expires_at DATETIME NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES user(id)
+);
