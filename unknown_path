@@ -1,7 +1,7 @@
-To implement saving the cart state for logged-in users, we need to:
+To implement shopping cart functionality, the following steps are necessary:
 
-1. Update the Cart model to associate it with a user.
-2. Modify the views to handle saving and retrieving cart state for logged-in users.
-3. Ensure that the cart state is persistent across sessions for logged-in users.
+1. Define models for the shopping cart and cart items.
+2. Create views to manage the shopping cart (adding items to it).
+3. Ensure cart persistence for logged-in users and temporary storage for guest users.
 
 We'll focus on the `cart` section under the `backend` folder for these implementations.
