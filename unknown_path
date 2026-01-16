@@ -1,7 +1,7 @@
-To implement the addition of new products to the inventory, necessary modifications will be made within the `catalog` folder:
+To implement profile management, the following files will be created within the `profile` folder:
 
-1. A model to represent the products.
-2. Views to handle the addition of new products.
-3. Support for initialization and configuration updates.
+1. A model to represent the profile.
+2. Views to handle profile updates.
+3. Supporting initialization and configuration.
 
-Let's proceed accordingly.
+These additions will follow the dependency safety and folder structure.
