@@ -1,7 +1,7 @@
-To implement shopping cart functionality, the following steps are necessary:
+To implement the search functionality for products, we need to:
 
-1. Define models for the shopping cart and cart items.
-2. Create views to manage the shopping cart (adding items to it).
-3. Ensure cart persistence for logged-in users and temporary storage for guest users.
+1. Develop a model and views for product search.
+2. Implement pagination.
+3. Highlight relevant search terms in results.
 
-We'll focus on the `cart` section under the `backend` folder for these implementations.
+We will add the functionality to the `search` folder under `product`.
