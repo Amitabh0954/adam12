@@ -9,6 +9,8 @@ from backend.profile.views import profile_bp
 from backend.product.catalog.models import db as catalog_db
 from backend.product.catalog.views import catalog_bp
 from backend.product.search.views import search_bp
+from backend.cart.models import db as cart_db
+from backend.cart.views import cart_bp
 
 def create_app() -> Flask:
     app = Flask(__name__)
@@ -26,9 +28,11 @@ def create_app() -> Flask:
     account_db.init_app(app)
     profile_db.init_app(app)
     catalog_db.init_app(app)
+    cart_db.init_app(app)
     Migrate(app, account_db)
     Migrate(app, profile_db)
     Migrate(app, catalog_db)
+    Migrate(app, cart_db)
     Session(app)
     mail.init_app(app)
 
@@ -36,5 +40,6 @@ def create_app() -> Flask:
     app.register_blueprint(profile_bp, url_prefix='/profile')
     app.register_blueprint(catalog_bp, url_prefix='/catalog')
     app.register_blueprint(search_bp, url_prefix='/catalog')
+    app.register_blueprint(cart_bp, url_prefix='/cart')
 
     return app
