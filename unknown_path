@@ -1,7 +1,8 @@
-The task is to add functionality for deleting products, ensuring that only admins can perform deletions and that deleted products don't appear in the catalog. We will create:
+To implement product categorization, the following steps need to be taken:
 
-1. A view to handle product deletions.
-2. A mechanism to confirm deletions.
-3. Functionality to ensure only admins can delete products.
+1. Define a model for categories.
+2. Extend the `Product` model to include a relationship with categories.
+3. Create views to manage categories.
+4. Ensure admin-only access for category management.
 
-Let's proceed accordingly:
+Let's create the necessary files.
