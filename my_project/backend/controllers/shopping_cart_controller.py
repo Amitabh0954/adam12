@@ -90,7 +90,30 @@ def update_cart_total(user_id: int, session_id: str, product_id: int) -> None:
         product = Product.query.get(item.product_id)
         total_price += product.price * item.quantity
 
-    # Here, normally, we would store the total in session or in a cart summary table if needed.
+    # Normally, we would store the total in session or in a cart summary table if needed.
     # For simplicity, it can be included in the response of view_cart.
 
-### Step 3: Register the updated `shopping_cart_controller` blueprint (no change needed here):
+@bp.route('/update_quantity', methods=['POST'])
+def update_quantity():
+    product_id = request.json.get('product_id')
+    quantity = request.json.get('quantity')
+    user_id = session.get('user_id')
+    session_id = session.sid
+
+    if quantity <= 0:
+        return jsonify({'error': 'Quantity must be a positive integer'}), 400
+
+    if user_id:
+        cart_item = ShoppingCart.query.filter_by(user_id=user_id, product_id=product_id).first()
+    else:
+        cart_item = ShoppingCart.query.filter_by(session_id=session_id, product_id=product_id).first()
+
+    if not cart_item:
+        return jsonify({'error': 'Product not in cart'}), 404
+
+    cart_item.quantity = quantity
+    db.session.commit()
+
+    return update_cart_total(user_id, session_id, product_id)
+
+### Step 2: Ensure `app.py` is registering the updated `shopping_cart_controller` blueprint (no change needed here):
