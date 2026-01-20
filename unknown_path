@@ -1,1 +1,3 @@
-For this next user story, we need to implement the password recovery functionality which includes password reset requests, email verification, and link expiration. Let's proceed to implement this within the "backend/account" folder.
+Based on the latest user story, we need to implement user profile management. This functionality will allow users to update their personal information and preferences. We'll implement this in the "backend/profile" folder.
+
+Let's begin by creating the necessary files and updating the project structure accordingly.
