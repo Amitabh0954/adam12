@@ -39,14 +39,4 @@ CREATE TABLE product (
     FOREIGN KEY(category_id) REFERENCES category(id)
 );
 
-CREATE TABLE shopping_cart (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER,
-    session_id TEXT,
-    product_id INTEGER NOT NULL,
-    quantity INTEGER NOT NULL DEFAULT 1,
-    FOREIGN KEY(user_id) REFERENCES user(id),
-    FOREIGN KEY(product_id) REFERENCES product(id)
-);
-
-### Step 5: Ensure dependencies are included:
+### Dependencies are already covered, ensuring there's no need for further changes in requirements.txt output.
