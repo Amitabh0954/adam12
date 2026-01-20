@@ -1,3 +1,5 @@
-Based on the latest user story, we need to implement the functionality to delete products from the catalog while ensuring that only administrators can delete these products and that deleted products no longer appear.
+Given the latest user story, we need to implement product search functionality. This will allow customers to search for products based on names, categories, or attributes, with pageable results and highlighted relevant search terms.
 
-We'll make the necessary updates to the "backend/product/catalog" directory to incorporate this.
+We'll implement this in the "backend/product/search" directory.
+
+Let's start by creating the necessary files:
