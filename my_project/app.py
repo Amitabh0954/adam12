@@ -1,6 +1,6 @@
 from flask import Flask, session
 from backend.models import db
-from backend.controllers import user_controller, password_reset_controller, profile_controller, product_controller, category_controller
+from backend.controllers import user_controller, password_reset_controller, profile_controller, product_controller
 from flask_session import Session
 from flask_mail import Mail
 
@@ -26,9 +26,8 @@ app.register_blueprint(user_controller.bp)
 app.register_blueprint(password_reset_controller.bp)
 app.register_blueprint(profile_controller.bp)
 app.register_blueprint(product_controller.bp)
-app.register_blueprint(category_controller.bp)
 
 if __name__ == '__main__':
     app.run(debug=True)
 
-### Step 5: Update the database schema to include hierarchical categories:
+### Step 5: Update `requirements.txt` to include Flask-Mail:
