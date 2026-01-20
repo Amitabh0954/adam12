@@ -1,5 +1,4 @@
-Given the latest user story, we need to implement the functionality to manage the product catalog. This involves adding new products to the inventory with validation on unique names, positive pricing, and a non-empty description.
+To implement the user story for updating existing product details, we'll add routes to update products, ensuring only administrators can perform these actions. We'll also create the necessary validation to ensure that price is numeric and the description can be modified but not removed.
 
-We'll implement this in the "backend/product/catalog" directory.
+Let's start by adding the necessary files and updating the current implementation:
 
-Let's start by creating the necessary files:
