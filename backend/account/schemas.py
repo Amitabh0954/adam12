@@ -8,3 +8,9 @@ class UserSchema(Schema):
         error='Password must contain at least one uppercase letter, one lowercase letter, and one number'
     )])
     created_at = fields.DateTime(dump_only=True)
+
+class LoginAttemptSchema(Schema):
+    id = fields.Int(dump_only=True)
+    user_id = fields.Int(required=True)
+    attempted_at = fields.DateTime(dump_only=True)
+    success = fields.Bool(dump_only=True)
