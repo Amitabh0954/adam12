@@ -4,6 +4,7 @@ from backend.models.password_reset_model import PasswordReset
 from flask_mail import Mail, Message
 import os
 from datetime import datetime
+import uuid
 
 mail = Mail()
 
