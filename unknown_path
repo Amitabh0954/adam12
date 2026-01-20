@@ -1,10 +1,11 @@
-To implement the feature allowing admins to delete products from the catalog with a confirmation mechanism and ensuring deleted products do not appear in the catalog, we will need to:
-1. Extend the `Product` model to include a soft delete mechanism.
-2. Implement the route in `product_controller.py` to handle product deletion.
-3. Ensure only admins can delete products.
-4. Update the database schema if necessary.
+To implement a search functionality that returns products based on names, categories, or attributes, with pagination and highlighted search terms, we need to:
+1. Add a search endpoint in the `product_controller.py`.
+2. Implement pagination support.
+3. Ensure search terms are highlighted in the results.
 
-## Updated Project Structure:
+Let's update the folder structure to include the necessary components for product search:
+
+## Final Folder Structure
 my_project/
 ├── backend/
 │   ├── models/
@@ -24,4 +25,4 @@ my_project/
 ├── app.py
 ├── requirements.txt
 
-### Step 1: Update the `Product` model to include a `deleted` flag for soft deletion:
+### Step 1: Implement the search endpoint in `product_controller.py`:
