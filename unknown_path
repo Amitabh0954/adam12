@@ -1,9 +1,6 @@
-To implement product categorization that supports hierarchical categories and allows admin management, we need to:
-1. Update the `Category` model to support parent-child relationships (hierarchical categories).
-2. Implement endpoints to manage categories in the `category_controller.py`.
-3. Ensure products belong to at least one category.
+We need to extend the user story for a product catalog management system. This will include creating new entities like `Product` and `Category`, and implementing the functionality to add new products.
 
-## Final Folder Structure:
+## Updated Project Structure:
 my_project/
 ├── backend/
 │   ├── models/
@@ -18,10 +15,20 @@ my_project/
 │   │   ├── password_reset_controller.py
 │   │   ├── profile_controller.py
 │   │   ├── product_controller.py
-│   │   ├── category_controller.py
 ├── database/
 │   ├── schema.sql
 ├── app.py
 ├── requirements.txt
 
-### Step 1: Update the `Category` model to support hierarchical categories:
+## User Stories:
+1. An admin can add new products to the inventory.
+2. Product name must be unique.
+3. Product price must be a positive number.
+4. Product description cannot be empty.
+
+Implementing the new components and their functionalities involves:
+1. Defining `Product` and `Category` models.
+2. Creating a `product_controller.py` to manage products.
+3. Updating the database schema to include products.
+
+### Step 1: Define `Product` and `Category` models:
