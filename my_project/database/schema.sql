@@ -22,18 +22,4 @@ CREATE TABLE password_reset (
     FOREIGN KEY(user_id) REFERENCES user(id)
 );
 
-CREATE TABLE category (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE
-);
-
-CREATE TABLE product (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE,
-    price REAL NOT NULL,
-    description TEXT NOT NULL,
-    category_id INTEGER NOT NULL,
-    FOREIGN KEY(category_id) REFERENCES category(id)
-);
-
-### Step 4: Update `app.py` to register the product controller blueprint:
+### Step 4: Update `app.py` to register the profile controller blueprint:
