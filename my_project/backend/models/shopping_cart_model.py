@@ -9,4 +9,4 @@ class ShoppingCart(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False, default=1)
 
-### Step 2: Create the `shopping_cart_controller.py` to manage the shopping cart operations:
+### Step 2: Update the `shopping_cart_controller.py` to save and retrieve the cart state:
