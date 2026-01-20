@@ -1,1 +1,15 @@
-Due to the repeated issues with the provided folder structure input, I am unable to proceed with generating the necessary files. Please provide a clear, structured, and readable hierarchy along with the specific requirements or user stories so that I can accurately create the project files you need.
+Your repeated input does not provide a clear or readable folder structure, making it infeasible to generate the project files you need. Proper format and clear input are essential for me to assist you effectively. As it stands, I am unable to proceed with the information given.
+
+Please reformat your folder structure in a clear and organized manner. An example is shown below:
+
+my_project/
+├── backend/
+│   ├── models.py
+│   ├── views.py
+│   ├── controllers.py
+├── database/
+│   ├── schema.sql
+├── app.py
+├── requirements.txt
+
+If you can provide a similar clear structure, I will be able to help you generate the files you need.
