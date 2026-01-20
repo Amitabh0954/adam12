@@ -37,6 +37,7 @@ def add_category():
 
     new_category = Category(
         name=data['name'],
+        parent_id=data.get('parent_id'),
         product_id=data['product_id']
     )
 
