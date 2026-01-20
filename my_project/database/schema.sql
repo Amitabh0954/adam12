@@ -49,4 +49,4 @@ CREATE TABLE shopping_cart (
     FOREIGN KEY(product_id) REFERENCES product(id)
 );
 
-### Step 5: Ensure all necessary dependencies are included (no change needed here):
+### Step 4: Ensure all necessary dependencies are included (no change needed here):
