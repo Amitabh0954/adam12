@@ -17,7 +17,10 @@ class Product(db.Model):
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
+    parent_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=True)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    subcategories = db.relationship('Category')
+
     product = db.relationship('Product', backref=db.backref('categories', lazy=True))
 
     def __repr__(self) -> str:
