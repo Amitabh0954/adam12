@@ -1,15 +1,13 @@
-from sqlalchemy import Column, Integer, String, Sequence
-from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
 
-Base = declarative_base()
+db = SQLAlchemy()
 
-class User(Base):
-    __tablename__ = 'users'
-    
-    id = Column(Integer, Sequence('user_id_seq'), primary_key=True)
-    username = Column(String(50), unique=True, nullable=False)
-    email = Column(String(120), unique=True, nullable=False)
-    password = Column(String(128), nullable=False)
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def __repr__(self):
-        return f"<User(username={self.username}, email={self.email})>"
+    def __repr__(self) -> str:
+        return f'<User {self.email}>'
