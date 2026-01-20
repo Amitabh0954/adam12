@@ -37,4 +37,4 @@ CREATE TABLE product (
     FOREIGN KEY(category_id) REFERENCES category(id)
 );
 
-### Step 4: Ensure `app.py` updates and dependencies are covered (no changes needed):
+### Step 4: Ensure all dependencies are included (no change needed here):
