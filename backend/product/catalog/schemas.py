@@ -6,6 +6,7 @@ class ProductSchema(Schema):
     price = fields.Float(required=True, validate=validate.Range(min=0.01))
     description = fields.Str(required=True)
     created_at = fields.DateTime(dump_only=True)
+    is_active = fields.Bool(dump_only=True)
 
 class CategorySchema(Schema):
     id = fields.Int(dump_only=True)
