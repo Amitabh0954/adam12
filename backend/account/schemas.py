@@ -22,3 +22,4 @@ class PasswordResetTokenSchema(Schema):
     created_at = fields.DateTime(dump_only=True)
     expiry_date = fields.DateTime(dump_only=True)
     is_used = fields.Bool(dump_only=True)
+
