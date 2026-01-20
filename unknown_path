@@ -1,8 +1,7 @@
-To implement the functionality for removing products from the shopping cart with automatic total price updates and user confirmation, we need:
-
-1. A method in the `shopping_cart_controller.py` to handle product removal.
-2. Ensure total price updates whenever a product is removed.
-3. Implement confirmation before deleting an item from the cart.
+To implement the functionality for modifying the quantity of products in the shopping cart and recalculating the total price, we need to:
+1. Add an endpoint in the `shopping_cart_controller.py` to handle modifying the quantity of cart items.
+2. Ensure the quantity is a positive integer.
+3. Automatically recalculate the total price whenever the quantity is modified.
 
 ## Final Project Folder Structure:
 my_project/
@@ -27,8 +26,4 @@ my_project/
 ├── app.py
 ├── requirements.txt
 
-### Step 1: Extend the `ShoppingCart` model if necessary:
-
-No changes needed here, the existing model suffices for the removal feature.
-
-### Step 2: Update `shopping_cart_controller.py` to handle product removal:
+### Step 1: Update the `shopping_cart_controller.py` to handle modifying the quantity of cart items:
