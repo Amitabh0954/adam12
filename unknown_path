@@ -1,8 +1,9 @@
-To implement the functionality for saving and retrieving the shopping cart state for logged-in users, we need to:
+To implement the shopping cart functionality, we need to:
+1. Add a `ShoppingCart` model to manage the cart items.
+2. Create controller endpoints for adding products to the shopping cart, viewing the shopping cart, and handling session persistence.
+3. Handle session management for both logged-in users and guest users.
 
-1. Ensure the `ShoppingCart` model associates carts with users when they are logged in.
-2. Update the `shopping_cart_controller.py` to save and retrieve the user's cart state across sessions.
-3. Ensure carts are correctly associated with user profiles and persistent data storage.
+We will extend our existing folder structure to support the new shopping cart functionality.
 
 ## Final Project Folder Structure:
 my_project/
@@ -27,4 +28,4 @@ my_project/
 ├── app.py
 ├── requirements.txt
 
-### Step 1: Ensure the `ShoppingCart` model is properly set up (if not already done):
+### Step 1: Create the `ShoppingCart` model:
