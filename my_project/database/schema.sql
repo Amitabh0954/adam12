@@ -2,10 +2,7 @@ CREATE TABLE user (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     email TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
-    login_attempts INTEGER DEFAULT 0 NOT NULL,
-    first_name TEXT,
-    last_name TEXT,
-    preferences TEXT
+    login_attempts INTEGER DEFAULT 0 NOT NULL
 );
 
 CREATE TABLE session (
@@ -21,5 +18,3 @@ CREATE TABLE password_reset (
     expires_at DATETIME,
     FOREIGN KEY(user_id) REFERENCES user(id)
 );
-
-### Step 4: Update `app.py` to register the profile controller blueprint:
