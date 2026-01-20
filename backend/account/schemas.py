@@ -14,3 +14,11 @@ class LoginAttemptSchema(Schema):
     user_id = fields.Int(required=True)
     attempted_at = fields.DateTime(dump_only=True)
     success = fields.Bool(dump_only=True)
+
+class PasswordResetTokenSchema(Schema):
+    id = fields.Int(dump_only=True)
+    user_id = fields.Int(required=True)
+    token = fields.Str(dump_only=True)
+    created_at = fields.DateTime(dump_only=True)
+    expiry_date = fields.DateTime(dump_only=True)
+    is_used = fields.Bool(dump_only=True)
