@@ -1,3 +1,5 @@
-Based on the latest user story, we need to implement user profile management. This functionality will allow users to update their personal information and preferences. We'll implement this in the "backend/profile" folder.
+Given the latest user story, we need to implement the functionality to manage the product catalog. This involves adding new products to the inventory with validation on unique names, positive pricing, and a non-empty description.
 
-Let's begin by creating the necessary files and updating the project structure accordingly.
+We'll implement this in the "backend/product/catalog" directory.
+
+Let's start by creating the necessary files:
