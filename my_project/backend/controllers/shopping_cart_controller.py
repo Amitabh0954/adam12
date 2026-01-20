@@ -116,4 +116,32 @@ def update_quantity():
 
     return update_cart_total(user_id, session_id, product_id)
 
-### Step 2: Ensure `app.py` is registering the updated `shopping_cart_controller` blueprint (no change needed here):
+@bp.route('/save', methods=['POST'])
+def save_cart():
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'User must be logged in to save cart state'}), 401
+
+    session_cart_items = ShoppingCart.query.filter_by(session_id=session.sid).all()
+    for item in session_cart_items:
+        item.user_id = user_id
+        item.session_id = None
+
+    db.session.commit()
+    return jsonify({'message': 'Cart state saved'})
+
+@bp.route('/load', methods=['GET'])
+def load_cart():
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'User must be logged in to load cart state'}), 401
+    
+    cart_items = ShoppingCart.query.filter_by(user_id=user_id).all()
+    for item in cart_items:
+        if not item.session_id:
+            item.session_id = session.sid
+
+    db.session.commit()
+    return view_cart()
+
+### Step 3: Ensure `app.py` is registering the updated `shopping_cart_controller` blueprint (no change needed here):
