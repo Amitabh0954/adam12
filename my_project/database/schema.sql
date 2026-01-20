@@ -24,7 +24,9 @@ CREATE TABLE password_reset (
 
 CREATE TABLE category (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE
+    name TEXT NOT NULL UNIQUE,
+    parent_id INTEGER,
+    FOREIGN KEY(parent_id) REFERENCES category(id)
 );
 
 CREATE TABLE product (
@@ -37,4 +39,14 @@ CREATE TABLE product (
     FOREIGN KEY(category_id) REFERENCES category(id)
 );
 
-### Step 4: Ensure all dependencies are included (no change needed here):
+CREATE TABLE shopping_cart (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    session_id TEXT,
+    product_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL DEFAULT 1,
+    FOREIGN KEY(user_id) REFERENCES user(id),
+    FOREIGN KEY(product_id) REFERENCES product(id)
+);
+
+### Step 5: Ensure all necessary dependencies are included (no change needed here):
