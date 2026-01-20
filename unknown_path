@@ -1,43 +1,26 @@
-I am unable to parse the folder structure from the data provided as it seems corrupted or improperly formatted. In order to proceed, I will need a clearer and more structured representation of your folder structure.
+Without a readable folder structure from you, I'm unable to generate the requested files. Proper input is needed to generate the required outputs. Please provide a clear and simple description of your folder structure and user requirements. 
 
-Please provide the information in a readable format, like this:
+For example:
 
-project-name/
-├── folder1/
-│   ├── file1.py
-│   ├── file2.py
-├── folder2/
-│   ├── file3.py
-│   ├── file4.py
-...
-
-And a few user stories to clarify the features you need.
-
-Here is an example:
-
-**Folder Structure:**
-ecommerce-project/
+project/
 ├── backend/
-│   ├── account/
-│   │   ├── models.py
-│   │   ├── views.py
-│   │   ├── schemas.py
-│   └── __init__.py
-├── product/
-│   ├── models.py
-│   ├── views.py
-│   ├── schemas.py
-│   └── tests/
-│       └── test_product.py
-├── database/
+│   ├── models/
+│   │   ├── user_model.py
+│   ├── views/
+│   │   ├── user_view.py
+│   ├── controllers/
+│   │   ├── user_controller.py
 ├── tests/
-│   └── test_app.py
-├── app.py
-└── requirements.txt
+│   ├── test_user.py
+├── main.py
+├── database/
+│   ├── schema.sql
+├── requirements.txt
 
-**User Stories:**
-1. User registration and login.
-2. Product catalog management.
-3. Order processing.
+And user requirements:
 
-Please provide the needed information so I can assist you correctly.
+1. Implement user registration and login.
+2. Add basic CRUD operations for user.
+3. Set up the database schema.
+
+Please provide your details in a similar structure for accurate file generation.
