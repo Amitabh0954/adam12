@@ -33,7 +33,8 @@ CREATE TABLE product (
     price REAL NOT NULL,
     description TEXT NOT NULL,
     category_id INTEGER NOT NULL,
+    deleted BOOLEAN NOT NULL DEFAULT 0,
     FOREIGN KEY(category_id) REFERENCES category(id)
 );
 
-### Step 4: Ensure relevant dependencies (no changes needed):
+### Step 4: Ensure `app.py` updates and dependencies are covered (no changes needed):
