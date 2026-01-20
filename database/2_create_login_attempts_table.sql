@@ -1,0 +1,7 @@
+CREATE TABLE login_attempts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    attempted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    success BOOLEAN NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
