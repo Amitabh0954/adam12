@@ -3,5 +3,6 @@ CREATE TABLE products (
     name VARCHAR(100) NOT NULL UNIQUE,
     price FLOAT NOT NULL,
     description TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT 1
 );
