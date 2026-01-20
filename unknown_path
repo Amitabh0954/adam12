@@ -1,5 +1,3 @@
-Given the latest user story, we need to implement product categorization. This will allow each product to belong to at least one category and ensure that categories are manageable by admins and can be hierarchical.
+Given the latest user story, we need to implement shopping cart functionality, ensuring that the cart persists across sessions for logged-in users, while guest users can still use the cart during their session.
 
-We'll implement this in the "backend/product/catalog" directory.
-
-Let's start by creating the necessary files and updating the current implementation:
+We'll implement this functionality in the "backend/cart" directory, creating the necessary models, schemas, and routes.
