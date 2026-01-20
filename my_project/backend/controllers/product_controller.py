@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, session
 from backend.models.product_model import Product, Category, db
+from sqlalchemy import or_
 
 bp = Blueprint('products', __name__, url_prefix='/products')
 
@@ -90,4 +91,41 @@ def delete_product(product_id):
 
     return jsonify({'message': 'Product deleted successfully'}), 200
 
-### Step 3: Update the database schema to include the `deleted` flag in the `product` table:
+@bp.route('/search', methods=['GET'])
+def search_products():
+    query = request.args.get('query', '')
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 10))
+
+    # Search products by name, description, or category name
+    results = Product.query.filter(
+        Product.deleted == False,
+        or_(
+            Product.name.ilike(f'%{query}%'),
+            Product.description.ilike(f'%{query}%'),
+            Category.name.ilike(f'%{query}%')
+        )
+    ).join(Category).paginate(page=page, per_page=per_page, error_out=False)
+
+    # Highlight the search terms in results
+    def highlight(term, text):
+        return text.replace(term, f'<strong>{term}</strong>')
+
+    products = [
+        {
+            'id': product.id,
+            'name': highlight(query, product.name),
+            'price': product.price,
+            'description': highlight(query, product.description),
+            'category': highlight(query, product.category.name) 
+        } for product in results.items
+    ]
+
+    return jsonify({
+        'products': products,
+        'total': results.total,
+        'pages': results.pages,
+        'current_page': results.page
+    })
+
+### Step 2: Update `app.py` to register the `product_controller` blueprint (no change needed here):
