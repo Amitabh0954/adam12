@@ -8,10 +8,11 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
+    deleted = db.Column(db.Boolean, default=False, nullable=False)
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
     products = db.relationship('Product', backref='category', lazy=True)
 
-### Step 2: Create a `product_controller.py` to manage products:
+### Step 2: Implement the product deletion route in the `product_controller.py`:
