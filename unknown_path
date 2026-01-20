@@ -1,11 +1,9 @@
-To implement the shopping cart functionality, we need to:
-1. Add a `ShoppingCart` model to manage the cart items.
-2. Create controller endpoints for adding products to the shopping cart, viewing the shopping cart, and handling session persistence.
-3. Handle session management for both logged-in users and guest users.
+To implement product categorization that supports hierarchical categories and allows admin management, we need to:
+1. Update the `Category` model to support parent-child relationships (hierarchical categories).
+2. Implement endpoints to manage categories in the `category_controller.py`.
+3. Ensure products belong to at least one category.
 
-We will extend our existing folder structure to support the new shopping cart functionality.
-
-## Final Project Folder Structure:
+## Final Folder Structure:
 my_project/
 ├── backend/
 │   ├── models/
@@ -13,7 +11,6 @@ my_project/
 │   │   ├── password_reset_model.py
 │   │   ├── product_model.py
 │   │   ├── category_model.py
-│   │   ├── shopping_cart_model.py
 │   ├── views/
 │   │   ├── user_view.py
 │   ├── controllers/
@@ -22,10 +19,9 @@ my_project/
 │   │   ├── profile_controller.py
 │   │   ├── product_controller.py
 │   │   ├── category_controller.py
-│   │   ├── shopping_cart_controller.py
 ├── database/
 │   ├── schema.sql
 ├── app.py
 ├── requirements.txt
 
-### Step 1: Create the `ShoppingCart` model:
+### Step 1: Update the `Category` model to support hierarchical categories:
