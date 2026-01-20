@@ -1,30 +1,30 @@
-Given the previous setup and the additional requirements for user login functionality, handling invalid login attempts, and session timeout, I will expand on the existing folder structure.
+To support the new requirement for updating product details with the necessary constraints, we need to:
+1. Implement a mechanism to ensure that only an admin can update product details.
+2. Ensure product price is numeric and description is non-empty when updated.
+
+Given our existing setup, we will:
+1. Update the `Product` model to ensure the constraints.
+2. Create a new route in `product_controller.py` to handle product updates.
+3. Add any necessary validation to ensure product updates adhere to the required constraints.
 
 ## Updated Folder Structure:
 my_project/
 ├── backend/
 │   ├── models/
 │   │   ├── user_model.py
+│   │   ├── password_reset_model.py
+│   │   ├── product_model.py
+│   │   ├── category_model.py
 │   ├── views/
 │   │   ├── user_view.py
 │   ├── controllers/
 │   │   ├── user_controller.py
+│   │   ├── password_reset_controller.py
+│   │   ├── profile_controller.py
+│   │   ├── product_controller.py
 ├── database/
 │   ├── schema.sql
 ├── app.py
 ├── requirements.txt
 
-## User Stories:
-1. User must be able to log into their account.
-2. Invalid login attempts must be limited.
-3. Session should time out after inactivity.
-
-I will add necessary features to support user login, invalid login attempt tracking, and session management.
-
-### Step 1: Update `app.py` to include session management.
-### Step 2: Update `user_model.py` to include invalid login attempt tracking.
-### Step 3: Update `user_controller.py` to handle login functionality.
-### Step 4: Add session table to `schema.sql`.
-### Step 5: Update `requirements.txt` to include Flask-Session.
-
-Let's start with `app.py`.
+### Step 1: Update `product_controller.py` to include product update functionality.
