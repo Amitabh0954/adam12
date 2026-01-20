@@ -24,9 +24,7 @@ CREATE TABLE password_reset (
 
 CREATE TABLE category (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE,
-    parent_id INTEGER,
-    FOREIGN KEY(parent_id) REFERENCES category(id)
+    name TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE product (
@@ -35,8 +33,7 @@ CREATE TABLE product (
     price REAL NOT NULL,
     description TEXT NOT NULL,
     category_id INTEGER NOT NULL,
-    deleted BOOLEAN NOT NULL DEFAULT 0,
     FOREIGN KEY(category_id) REFERENCES category(id)
 );
 
-### Dependencies are already covered, ensuring there's no need for further changes in requirements.txt output.
+### Step 4: Update `app.py` to register the product controller blueprint:
