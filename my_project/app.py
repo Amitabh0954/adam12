@@ -27,7 +27,7 @@ app.register_blueprint(password_reset_controller.bp)
 app.register_blueprint(profile_controller.bp)
 app.register_blueprint(product_controller.bp)
 
-if __name__ == '__main__':
+if __name__=='__main__':
     app.run(debug=True)
 
-### Step 3: Update database schema for product and category tables, if necessary:
+#### Step 5: Ensure `requirements.txt` is up-to-date:
