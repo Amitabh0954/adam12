@@ -33,13 +33,12 @@ def add_product():
 
 @bp.route('/update/<int:product_id>', methods=['PUT'])
 def update_product(product_id):
-    # Assume user_role session key determines if the user is an admin or not
     user_role = session.get('user_role')
     if user_role != 'admin':
         return jsonify({'error': 'Unauthorized'}), 403
 
     product = Product.query.get(product_id)
-    if not product:
+    if not product or product.deleted:
         return jsonify({'error': 'Product not found'}), 404
 
     data = request.json
@@ -54,7 +53,6 @@ def update_product(product_id):
     if price <= 0:
         return jsonify({'error': 'Product price must be a positive number'}), 400
 
-    # Check if updated name is already taken by another product
     if name != product.name and Product.query.filter_by(name=name).first():
         return jsonify({'error': 'Product name must be unique'}), 400
 
@@ -73,4 +71,23 @@ def update_product(product_id):
     db.session.commit()
     return jsonify({'message': 'Product updated successfully'}), 200
 
-### Step 2: Update `app.py` to ensure proper session and admin check:
+@bp.route('/delete/<int:product_id>', methods=['DELETE'])
+def delete_product(product_id):
+    user_role = session.get('user_role')
+    if user_role != 'admin':
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    product = Product.query.get(product_id)
+    if not product or product.deleted:
+        return jsonify({'error': 'Product not found'}), 404
+
+    confirm = request.json.get('confirm', False)
+    if not confirm:
+        return jsonify({'error': 'Confirmation is required'}), 400
+
+    product.deleted = True
+    db.session.commit()
+
+    return jsonify({'message': 'Product deleted successfully'}), 200
+
+### Step 3: Update the database schema to include the `deleted` flag in the `product` table:
