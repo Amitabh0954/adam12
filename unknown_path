@@ -1,7 +1,8 @@
-To implement the functionality for modifying the quantity of products in the shopping cart and recalculating the total price, we need to:
-1. Add an endpoint in the `shopping_cart_controller.py` to handle modifying the quantity of cart items.
-2. Ensure the quantity is a positive integer.
-3. Automatically recalculate the total price whenever the quantity is modified.
+To implement the functionality for saving and retrieving the shopping cart state for logged-in users, we need to:
+
+1. Ensure the `ShoppingCart` model associates carts with users when they are logged in.
+2. Update the `shopping_cart_controller.py` to save and retrieve the user's cart state across sessions.
+3. Ensure carts are correctly associated with user profiles and persistent data storage.
 
 ## Final Project Folder Structure:
 my_project/
@@ -26,4 +27,4 @@ my_project/
 ├── app.py
 ├── requirements.txt
 
-### Step 1: Update the `shopping_cart_controller.py` to handle modifying the quantity of cart items:
+### Step 1: Ensure the `ShoppingCart` model is properly set up (if not already done):
