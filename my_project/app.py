@@ -32,4 +32,4 @@ app.register_blueprint(shopping_cart_controller.bp)
 if __name__ == '__main__':
     app.run(debug=True)
 
-### Step 4: Ensure database schema remains consistent (no change needed here):
+### Step 4: Add the required schema for the `ShoppingCart` model:
