@@ -1,0 +1,9 @@
+CREATE TABLE password_reset_tokens (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    token VARCHAR(100) NOT NULL UNIQUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    expiry_date DATETIME NOT NULL,
+    is_used BOOLEAN DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
