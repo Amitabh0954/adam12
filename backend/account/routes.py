@@ -1,7 +1,8 @@
-from flask import Blueprint, request, jsonify, url_for
+from flask import Blueprint, request, jsonify, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_mail import Mail, Message
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required
 from .models import db, User, LoginAttempt, PasswordResetToken
 from .schemas import UserSchema, LoginAttemptSchema, PasswordResetTokenSchema
 from datetime import timedelta, datetime
@@ -46,11 +47,12 @@ def login():
     db.session.add(attempt)
     db.session.commit()
     
+    access_token = create_access_token(identity=user.id)
     session['user_id'] = user.id
     session.permanent = True
     session.modified = True
 
-    return jsonify({'message': 'Login successful', 'user_id': user.id}), 200
+    return jsonify({'message': 'Login successful', 'user_id': user.id, 'access_token': access_token}), 200
 
 @account_bp.route('/logout', methods=['POST'])
 def logout():
