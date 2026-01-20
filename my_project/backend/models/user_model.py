@@ -9,15 +9,8 @@ class User(db.Model):
     password_hash = db.Column(db.String(128), nullable=False)
     login_attempts = db.Column(db.Integer, default=0, nullable=False)
 
-    # Additional profile fields
-    first_name = db.Column(db.String(50))
-    last_name = db.Column(db.String(50))
-    preferences = db.Column(db.Text)
-
     def set_password(self, password: str):
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password: str) -> bool:
         return check_password_hash(self.password_hash, password)
-
-### Step 3: Update `schema.sql`:
