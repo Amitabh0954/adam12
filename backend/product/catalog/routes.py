@@ -69,3 +69,13 @@ def update_product(product_id: int):
     db.session.commit()
 
     return product_schema.jsonify(product), 200
+
+@catalog_bp.route('/products/<int:product_id>', methods=['DELETE'])
+@jwt_required()
+def delete_product(product_id: int):
+    product = Product.query.get_or_404(product_id)
+    
+    product.is_active = False
+    db.session.commit()
+
+    return jsonify({'message': 'Product deleted successfully'}), 200
