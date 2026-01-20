@@ -1,10 +1,6 @@
-### User Story Analysis:
-The latest user story requires users to be able to update their profile information, and changes should reflect immediately. To implement this, we need to:
-1. Implement profile updates functionality in the backend.
-2. Validate and save updates to the user model.
-3. Ensure changes are reflected immediately upon saving.
+Given the updated requirements for password recovery, we need to integrate password reset functionality with email verification, ensuring the reset links expire within 24 hours. Following the initial setup, we will add the necessary files and logic.
 
-## Updated Project Structure:
+## Updated Folder Structure:
 my_project/
 ├── backend/
 │   ├── models/
@@ -15,15 +11,22 @@ my_project/
 │   ├── controllers/
 │   │   ├── user_controller.py
 │   │   ├── password_reset_controller.py
-│   │   ├── profile_controller.py
 ├── database/
 │   ├── schema.sql
 ├── app.py
 ├── requirements.txt
 
-## Implementation Steps:
-1. **Add `profile_controller.py`**: Implement profile management endpoints.
-2. **Update `user_model.py`**: Extend the User model to include additional profile fields.
-3. **Update `schema.sql`**: Create database schema including new profile fields.
+## Updated User Stories:
+4. Users can send a password reset request.
+5. Users must verify their identity via email.
+6. Password reset links must expire after 24 hours.
 
-### Step 1: Add `profile_controller.py`:
+Given these, let's proceed step by step:
+
+### Step 1: Add the `password_reset_model.py`.
+### Step 2: Implement the `password_reset_controller.py` for password recovery.
+### Step 3: Update `user_controller.py` to include login and invalid attempt handling.
+### Step 4: Update the `schema.sql` to include the password reset table.
+### Step 5: Update `requirements.txt` to include Flask-Mail.
+
+Let's start with `password_reset_model.py`:
