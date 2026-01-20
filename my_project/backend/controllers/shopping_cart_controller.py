@@ -15,15 +15,19 @@ def view_cart():
         cart_items = ShoppingCart.query.filter_by(session_id=session_id).all()
 
     response = []
+    total_price = 0
     for item in cart_items:
         product = Product.query.get(item.product_id)
+        item_total = product.price * item.quantity
+        total_price += item_total
         response.append({
             'product_id': item.product_id,
             'product_name': product.name,
-            'quantity': item.quantity
+            'quantity': item.quantity,
+            'item_total': item_total
         })
 
-    return jsonify({'cart': response})
+    return jsonify({'cart': response, 'total_price': total_price})
 
 @bp.route('/add', methods=['POST'])
 def add_to_cart():
@@ -50,4 +54,43 @@ def add_to_cart():
     db.session.commit()
     return jsonify({'message': 'Product added to cart'}), 201
 
-### Step 3: Update `app.py` to register the `shopping_cart_controller` blueprint:
+@bp.route('/remove', methods=['POST'])
+def remove_from_cart():
+    product_id = request.json.get('product_id')
+    confirm = request.json.get('confirm', False)
+    user_id = session.get('user_id')
+    session_id = session.sid
+
+    if not confirm:
+        return jsonify({'error': 'Confirmation is required to remove item'}), 400
+
+    if user_id:
+        cart_item = ShoppingCart.query.filter_by(user_id=user_id, product_id=product_id).first()
+    else:
+        cart_item = ShoppingCart.query.filter_by(session_id=session_id, product_id=product_id).first()
+
+    if not cart_item:
+        return jsonify({'error': 'Product not in cart'}), 404
+
+    db.session.delete(cart_item)
+    db.session.commit()
+    
+    update_cart_total(user_id=user_id, session_id=session_id, product_id=product_id)
+
+    return jsonify({'message': 'Product removed from cart'}), 200
+
+def update_cart_total(user_id: int, session_id: str, product_id: int) -> None:
+    if user_id:
+        cart_items = ShoppingCart.query.filter_by(user_id=user_id).all()
+    else:
+        cart_items = ShoppingCart.query.filter_by(session_id=session_id).all()
+
+    total_price = 0
+    for item in cart_items:
+        product = Product.query.get(item.product_id)
+        total_price += product.price * item.quantity
+
+    # Here, normally, we would store the total in session or in a cart summary table if needed.
+    # For simplicity, it can be included in the response of view_cart.
+
+### Step 3: Register the updated `shopping_cart_controller` blueprint (no change needed here):
