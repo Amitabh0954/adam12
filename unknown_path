@@ -1,4 +1,8 @@
-We need to extend the user story for a product catalog management system. This will include creating new entities like `Product` and `Category`, and implementing the functionality to add new products.
+### User Story Analysis:
+The latest user story requires users to be able to update their profile information, and changes should reflect immediately. To implement this, we need to:
+1. Implement profile updates functionality in the backend.
+2. Validate and save updates to the user model.
+3. Ensure changes are reflected immediately upon saving.
 
 ## Updated Project Structure:
 my_project/
@@ -6,29 +10,20 @@ my_project/
 │   ├── models/
 │   │   ├── user_model.py
 │   │   ├── password_reset_model.py
-│   │   ├── product_model.py
-│   │   ├── category_model.py
 │   ├── views/
 │   │   ├── user_view.py
 │   ├── controllers/
 │   │   ├── user_controller.py
 │   │   ├── password_reset_controller.py
 │   │   ├── profile_controller.py
-│   │   ├── product_controller.py
 ├── database/
 │   ├── schema.sql
 ├── app.py
 ├── requirements.txt
 
-## User Stories:
-1. An admin can add new products to the inventory.
-2. Product name must be unique.
-3. Product price must be a positive number.
-4. Product description cannot be empty.
+## Implementation Steps:
+1. **Add `profile_controller.py`**: Implement profile management endpoints.
+2. **Update `user_model.py`**: Extend the User model to include additional profile fields.
+3. **Update `schema.sql`**: Create database schema including new profile fields.
 
-Implementing the new components and their functionalities involves:
-1. Defining `Product` and `Category` models.
-2. Creating a `product_controller.py` to manage products.
-3. Updating the database schema to include products.
-
-### Step 1: Define `Product` and `Category` models:
+### Step 1: Add `profile_controller.py`:
