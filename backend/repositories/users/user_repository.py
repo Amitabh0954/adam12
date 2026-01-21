@@ -11,3 +11,9 @@ class UserRepository:
 
     def get_user_by_email(self, email: str) -> Optional[User]:
         return next((user for user in self.users if user.email == email), None)
+
+    def authenticate_user(self, email: str, password: str) -> Optional[User]:
+        user = self.get_user_by_email(email)
+        if user and user.check_password(password):
+            return user
+        return None
