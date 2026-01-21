@@ -13,3 +13,6 @@ class User:
         self.created_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
         self.cart_state = None
+        self.is_email_authenticated = False
+        self.email_auth_token = None
+        self.email_auth_token_expiry = None
