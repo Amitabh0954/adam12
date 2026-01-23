@@ -33,3 +33,9 @@ class AuthenticationService:
 
     def _is_account_locked(self, email: str) -> bool:
         return self.failed_attempts.get(email, 0) >= 5
+
+    def hash_password(self, password: str) -> str:
+        return sha256(password.encode()).hexdigest()
+
+    def verify_password(self, password: str, hashed: str) -> bool:
+        return hashed == sha256(password.encode()).hexdigest()
