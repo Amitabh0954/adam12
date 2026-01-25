@@ -13,7 +13,8 @@ CREATE TABLE shopping_cart_items (
     FOREIGN KEY (cart_id) REFERENCES shopping_carts(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
+*Note: This file combines table creation from various aspects of shopping cart operations.*
 
-#### 6. Ensure this feature works by initializing it in the application
+#### 5. Ensure this feature works by initializing it in the application
 
 ##### Initialize Application with Updated Models and Routes
