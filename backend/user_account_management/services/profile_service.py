@@ -23,6 +23,6 @@ class ProfileService:
         self.session.commit()
         return user
 
-#### 3. Implement a controller to expose the API for profile updates
+#### 3. Implement a controller to expose the API for profile management
 
 ##### ProfileController
