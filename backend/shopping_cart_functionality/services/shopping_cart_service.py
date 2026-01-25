@@ -44,7 +44,20 @@ class ShoppingCartService:
         self.session.commit()
         self.session.refresh(cart)
         return cart
+        
+    def update_item_quantity(self, user_id: int, product_id: int, new_quantity: int) -> ShoppingCart:
+        if new_quantity < 1:
+            raise ValueError("Quantity must be a positive integer")
+            
+        cart = self.get_cart(user_id)
+        item = self.session.query(ShoppingCartItem).filter_by(cart_id=cart.id, product_id=product_id).first()
+        if not item:
+            raise ValueError("Item not found in cart")
+            
+        item.quantity = new_quantity
+        
+        self.session.commit()
+        self.session.refresh(cart)
+        return cart
 
-#### 2. Update ShoppingCartItem schema if necessary
-
-#### 3. Implement remove item endpoint in the shopping cart controller
+#### 2. Implement the update quantity endpoint in the ShoppingCartController
