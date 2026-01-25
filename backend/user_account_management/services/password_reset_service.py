@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from werkzeug.security import generate_password_hash
-from backend.user_account_management.models.user import User
 from backend.user_account_management.models.password_reset_token import PasswordResetToken
+from backend.user_account_management.models.user import User
 from datetime import datetime, timedelta
 import uuid
 import smtplib
