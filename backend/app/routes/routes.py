@@ -14,12 +14,4 @@ def register_routes(app: Flask):
     app.register_blueprint(category_controller, url_prefix='/api')
     app.register_blueprint(shopping_cart_controller, url_prefix='/api')
 
-### Summary
-
-This implementation makes sure the shopping cart state is saved to the user's profile and can be retrieved across multiple sessions. The changes made include:
-
-- **Extending Services** to handle saving and retrieving the cart state.
-- **Updating Controllers** to include endpoints for save and retrieve functionality.
-- **Ensuring Routes** include the necessary endpoints for shopping cart operations.
-
-These changes will ensure that the shopping cart functionality provides a seamless and persistent shopping experience for logged-in users.
+#### 6. Ensure integration with the main application initialization
