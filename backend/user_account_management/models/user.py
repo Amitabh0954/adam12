@@ -12,7 +12,5 @@ class User(Base):
     password = Column(String, nullable=False)
     login_attempts = Column(Integer, default=0)
     last_login = Column(DateTime, nullable=True)
-    reset_token = Column(String, nullable=True)
-    reset_token_expires_at = Column(DateTime, nullable=True)
 
-#### 2. Create `PasswordResetSchema` for validating password reset requests
+#### 2. Create `LoginSchema` for validating login requests
