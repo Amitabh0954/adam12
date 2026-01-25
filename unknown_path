@@ -1,16 +1,15 @@
-To implement the password recovery functionality, ensuring that password reset links expire after 24 hours and users verify their identity via email, we need to follow these steps:
+To implement profile management functionality, ensuring that profile updates are saved correctly and changes are reflected immediately, we need to:
 
 ### Implementation Plan:
 
-1. **Define the PasswordResetToken model.**
-2. **Implement services for generating and validating password reset tokens.**
-3. **Implement a controller to expose the API for password recovery.**
-4. **Update routes to include the new password reset endpoint.**
-5. **Update MySQL database schema to include the password reset token table.**
-6. **Ensure this feature works by initializing it in the application.**
+1. **Update the User model to include additional profile information.**
+2. **Implement a service for profile management to handle updates.**
+3. **Implement a controller to expose the API for profile updates.**
+4. **Update routes to include the new profile management endpoint.**
+5. **Ensure this feature works by initializing it in the application.**
 
 ### Implementation:
 
-#### 1. Define the PasswordResetToken model
+#### 1. Update the User model to include additional profile information
 
-##### PasswordResetToken Model
+##### User Model
