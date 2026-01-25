@@ -1,16 +1,16 @@
-To implement the registration functionality ensuring that email is unique and password meets security criteria, we will follow the plan below:
+To implement the password recovery functionality where password reset links expire after 24 hours and users must verify their identity via email, follow the steps below:
 
 ### Implementation Plan:
 
-1. **Define the User model with appropriate constraints for email and password.**
-2. **Implement services for user registration, ensuring email uniqueness and password security criteria.**
-3. **Implement a controller to expose the API for user registration.**
-4. **Update routes to include the new user registration endpoint.**
-5. **Update MySQL database schema to ensure constraints are applied.**
+1. **Define the PasswordResetToken model.**
+2. **Implement services for generating and validating password reset tokens.**
+3. **Implement a controller to expose the API for password recovery.**
+4. **Update routes to include the password reset endpoint.**
+5. **Update MySQL database schema to include the password reset token table.**
 6. **Ensure this feature works by initializing it in the application.**
 
 ### Implementation:
 
-#### 1. Define the User model with appropriate constraints for email and password
+#### 1. Define the PasswordResetToken model
 
-##### Create User Model
+##### PasswordResetToken Model
