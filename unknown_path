@@ -1,15 +1,15 @@
-Based on your user story and the given folder structure, we need to implement password recovery functionality in the `user_account_management` module. This will involve creating and updating models, services, controllers, and routes. The password recovery process will include generating a password reset link that expires after 24 hours and email verification for identity confirmation.
+Based on the folder structure and user stories provided, we need to implement user login functionality under the folder `backend/user_account_management`. This involves creating necessary models, services, controllers, and routes to handle user login with constraints on invalid login attempts and session timeout.
 
-### Implementation Plan:
+### Steps to Implement User Login Functionality:
 
-1. **Update the User model**: Add fields for password reset token and expiration.
-2. **Create a schema for password reset**: `PasswordResetSchema`.
-3. **Implement password reset service**: Service methods for password recovery.
-4. **Implement password reset controller**: Controller for handling password reset requests.
-5. **Update routes**: Include routes for password reset.
+1. **Update the User model**: Add fields for tracking login attempts and last login.
+2. **Create a schema for user login**: `LoginSchema`.
+3. **Implement login service**: Service method for logging in users.
+4. **Implement login controller**: Controller for handling login requests.
+5. **Update routes**: Include routes for login.
 6. **Ensure main app initialization**: Proper integration of user account management routes.
 7. **Update database schema**: Accommodate new fields.
 
 ### Implementation:
 
-#### 1. Update the `User` model for password recovery
+#### 1. Update the `User` model to support login attempts and session management
