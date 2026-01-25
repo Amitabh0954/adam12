@@ -15,6 +15,6 @@ class Product(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-#### 2. Implement services for managing products
+#### 2. Implement services to manage product updates with necessary validations
 
 ##### ProductService
