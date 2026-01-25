@@ -103,6 +103,34 @@ def modify_product_quantity():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
-#### 3. Update routes to include the new shopping cart management endpoint for quantity modification
+@shopping_cart_controller.route('/cart/save', methods=['POST'])
+def save_cart_state():
+    session_db = Session()
+    cart_service = ShoppingCartService(session_db)
+    
+    user_id = request.json.get('user_id')
+    session_id = session.get('session_id')
+
+    try:
+        cart = cart_service.save_cart_state(user_id=user_id, session_id=session_id)
+        return jsonify({"cart_id": cart.id, "message": "Cart state saved successfully"}), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+@shopping_cart_controller.route('/cart/retrieve', methods=['GET'])
+def retrieve_cart_state():
+    session_db = Session()
+    cart_service = ShoppingCartService(session_db)
+    
+    user_id = request.args.get('user_id')
+
+    try:
+        cart = cart_service.retrieve_cart_state(user_id=user_id)
+        cart_items = cart_service.get_cart_items(cart)
+        return jsonify(cart_items), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+#### 3. Update routes to include the new shopping cart management endpoint for saving and retrieving the cart state
 
 ##### Updated Routes
