@@ -19,4 +19,15 @@ def register():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
-#### 5. Create the route to register the user
+@user_controller.route('/login', methods=['POST'])
+def login():
+    session = Session()
+    user_service = UserService(session)
+
+    try:
+        user = user_service.login_user(request.json)
+        return jsonify({"id": user.id, "email": user.email}), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+#### 5. Update routes to include login functionality
