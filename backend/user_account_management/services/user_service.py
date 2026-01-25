@@ -2,7 +2,6 @@ from backend.user_account_management.models.user import User
 from backend.user_account_management.schemas.user_schema import UserSchema
 from backend.user_account_management.schemas.login_schema import LoginSchema
 from backend.user_account_management.schemas.password_reset_schema import PasswordResetRequestSchema, PasswordResetSchema
-from backend.user_account_management.schemas.profile_update_schema import ProfileUpdateSchema
 from sqlalchemy.orm import Session
 from marshmallow import ValidationError
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -69,20 +68,4 @@ class UserService:
         user.reset_token_expires_at = None
         self.session.commit()
 
-    def update_profile(self, user_id: int, data: dict) -> User:
-        try:
-            update_data = ProfileUpdateSchema().load(data)
-        except ValidationError as err:
-            raise ValueError(f"Invalid data: {err.messages}")
-
-        user = self.session.query(User).filter_by(id=user_id).first()
-        if not user:
-            raise ValueError("User not found")
-
-        for key, value in update_data.items():
-            setattr(user, key, value)
-
-        self.session.commit()
-        return user
-
-#### 4. Implement profile management controller
+#### 4. Implement password reset controller
