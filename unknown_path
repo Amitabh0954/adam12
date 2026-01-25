@@ -1,15 +1,21 @@
-Based on the folder structure and user stories provided, we need to implement user login functionality under the folder `backend/user_account_management`. This involves creating necessary models, services, controllers, and routes to handle user login with constraints on invalid login attempts and session timeout.
+Based on your user story and the given folder structure, we need to implement the user registration functionality within the `user_account_management` module in the backend. This involves creating the necessary models, services, controllers, and routes.
 
-### Steps to Implement User Login Functionality:
+### Tasks:
 
-1. **Update the User model**: Add fields for tracking login attempts and last login.
-2. **Create a schema for user login**: `LoginSchema`.
-3. **Implement login service**: Service method for logging in users.
-4. **Implement login controller**: Controller for handling login requests.
-5. **Update routes**: Include routes for login.
-6. **Ensure main app initialization**: Proper integration of user account management routes.
-7. **Update database schema**: Accommodate new fields.
+1. Create the `User` model.
+2. Create the `UserSchema` for validation.
+3. Implement the user registration service logic.
+4. Implement the user registration controller.
+5. Create the route to register the user.
+6. Ensure the main app initialization properly integrates this module.
 
-### Implementation:
+### Folder Structure:
 
-#### 1. Update the `User` model to support login attempts and session management
+- `backend/user_account_management/models/`
+- `backend/user_account_management/services/`
+- `backend/user_account_management/controllers/`
+- `backend/app/routes/`
+
+Let's implement these components:
+
+#### 1. Create the User model
