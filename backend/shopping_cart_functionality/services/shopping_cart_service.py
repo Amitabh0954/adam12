@@ -21,6 +21,9 @@ class ShoppingCartService:
         return cart
 
     def add_product_to_cart(self, cart: ShoppingCart, product_id: int, quantity: int) -> ShoppingCartItem:
+        if quantity <= 0:
+            raise ValueError("Quantity must be a positive integer")
+        
         product = self.session.query(Product).get(product_id)
         if not product:
             raise ValueError("Product not found")
@@ -32,6 +35,18 @@ class ShoppingCartService:
             cart_item = ShoppingCartItem(cart_id=cart.id, product_id=product_id, quantity=quantity)
             self.session.add(cart_item)
 
+        self.session.commit()
+        return cart_item
+
+    def modify_product_quantity(self, cart: ShoppingCart, product_id: int, quantity: int) -> ShoppingCartItem:
+        if quantity <= 0:
+            raise ValueError("Quantity must be a positive integer")
+        
+        cart_item = self.session.query(ShoppingCartItem).filter_by(cart_id=cart.id, product_id=product_id).first()
+        if not cart_item:
+            raise ValueError("Product not found in cart")
+
+        cart_item.quantity = quantity
         self.session.commit()
         return cart_item
 
@@ -52,6 +67,6 @@ class ShoppingCartService:
             "total_price": total_price
         }
 
-#### 2. Implement a controller to expose the API for removing items from the shopping cart with confirmation
+#### 2. Implement a controller to expose the API for modifying quantities in the shopping cart
 
 ##### ShoppingCartController
