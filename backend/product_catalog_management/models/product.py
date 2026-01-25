@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Float, Text
+from sqlalchemy import Column, Integer, String, Float, Text, ForeignKey
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -10,5 +11,8 @@ class Product(Base):
     name = Column(String, unique=True, nullable=False)
     price = Column(Float, nullable=False)
     description = Column(Text, nullable=False)
+    category_id = Column(Integer, ForeignKey('categories.id'), nullable=False)
 
-#### 2. Create `ProductSchema` for validating product data
+    category = relationship('Category', backref='products')
+
+#### 3. Create `CategorySchema`
