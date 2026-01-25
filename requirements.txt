@@ -7,10 +7,10 @@ werkzeug==2.0.2
 
 ### Summary
 
-This implementation of user registration ensures that:
-- Emails are unique.
-- Passwords meet security criteria.
-- API endpoints are provided for user registration.
-- The MySQL database schema supports user information.
+This implementation of removing products from the shopping cart ensures that:
+- Users can remove products with a confirmation.
+- The total price updates automatically after the item is removed.
+- API endpoints are provided to handle the removal of products from the shopping cart.
+- The MySQL database schema supports necessary fields for cart management.
 
-With these elements in place, users will be able to register, enabling them to create personalized profiles and access their data.
+With these elements in place, the shopping cart functionality will allow users to manage their selections efficiently and enhance their shopping experience.
