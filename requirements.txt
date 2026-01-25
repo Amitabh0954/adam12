@@ -2,10 +2,3 @@ flask==2.1.1
 sqlalchemy==1.4.27
 marshmallow==3.14.1
 werkzeug==2.0.2
-
-### Notes:
-
-- The change to `backend/app/__init__.py` ensures both user and product databases are initialized.
-- The table creation script is placed in `database/create_products_table.sql` to adhere to SQL file placement rules.
-  
-This completes the implementation of adding new products to the inventory and integrates it with the existing structure.
