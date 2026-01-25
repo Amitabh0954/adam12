@@ -1,16 +1,14 @@
-To implement the user registration functionality with unique email and secure password criteria, we need to follow these steps:
+To implement the functionality for removing products from the shopping cart, ensuring that the total price updates automatically and users see a confirmation before the removal, we need to follow these steps:
 
 ### Implementation Plan:
 
-1. **Define the User model with unique email validation.**
-2. **Implement a service for user registration with password security checks.**
-3. **Implement a controller to expose the API for user registration.**
-4. **Update routes to include the new user registration endpoint.**
-5. **Update MySQL database schema to include the user table.**
-6. **Ensure this feature works by initializing it in the application.**
+1. **Extend the ShoppingCartService to handle removing items from the cart and updating the total price.**
+2. **Implement a controller to expose the API for removing items from the shopping cart with confirmation.**
+3. **Update routes to include the new shopping cart management endpoint for item removal.**
+4. **Ensure this feature works by initializing it in the application.**
 
 ### Implementation:
 
-#### 1. Define the User model with unique email validation
+#### 1. Extend the ShoppingCartService to handle removing items from the cart and updating the total price
 
-##### User Model
+##### Updated ShoppingCartService
