@@ -11,4 +11,4 @@ CREATE TABLE users (
 
 #### 6. Ensure this feature works by initializing it in the application
 
-##### Initialize Application
+##### Initialize Application with Updated Models and Routes
