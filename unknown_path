@@ -1,19 +1,14 @@
-To implement the user login functionality with the constraints on invalid login attempts and session timeout after inactivity, we need to follow these steps:
+To implement the functionality for modifying the quantity of products in the shopping cart and recalculating the total price, we need to follow these steps:
 
 ### Implementation Plan:
 
-1. **Define the models for User, UserSession, and LoginAttempt.**
-2. **Implement services for user authentication and session management.**
-3. **Implement a controller to expose the API for user login.**
-4. **Update routes to include the new user login endpoint.**
-5. **Update MySQL database schema to include the necessary tables.**
-6. **Ensure this feature works by initializing it in the application.**
+1. **Extend the ShoppingCartService to handle modifying quantities of items and updating the total price.**
+2. **Implement a controller to expose the API for modifying quantities in the shopping cart.**
+3. **Update routes to include the new shopping cart management endpoint for quantity modification.**
+4. **Ensure this feature works by initializing it in the application.**
 
 ### Implementation:
 
-#### 1. Define the models for User, UserSession, and LoginAttempt
+#### 1. Extend the ShoppingCartService to handle modifying quantities of items and updating the total price
 
-##### User Model
-Assuming this model is consistent with the previous registration functionality.
-
-##### UserSession Model
+##### Updated ShoppingCartService
