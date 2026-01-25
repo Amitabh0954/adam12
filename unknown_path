@@ -1,16 +1,16 @@
-Based on the user story regarding managing user account profile and saving profile updates correctly, let's proceed with the implementation.
+To implement the functionality for updating existing product details ensuring that only an admin can update them, price must be numeric, and description can be modified but not removed, follow these steps:
 
 ### Implementation Plan:
 
-1. **Define the User model with appropriate fields for the profile.**
-2. **Implement services for managing profiles (updating user details).**
-3. **Implement a controller to expose the API for profile management.**
-4. **Update routes to include the update profile endpoint.**
-5. **Update MySQL database schema to include these profile fields.**
+1. **Ensure Product model has the necessary fields and constraints.**
+2. **Implement services to manage product updates with necessary validations.**
+3. **Implement a controller to expose the API endpoints for updating products.**
+4. **Update routes to include the endpoint for updating products.**
+5. **Update MySQL database schema to ensure product fields are correctly defined.**
 6. **Ensure this feature works by initializing it in the application.**
 
 ### Implementation:
 
-#### 1. Define the User model with appropriate fields
+#### 1. Ensure Product model has the necessary fields
 
-##### User Model
+##### Product Model
