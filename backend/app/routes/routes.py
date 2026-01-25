@@ -18,6 +18,6 @@ def register_routes(app: Flask):
     app.register_blueprint(category_controller, url_prefix='/api')
     app.register_blueprint(shopping_cart_controller, url_prefix='/api')
 
-#### 4. Update MySQL database schema to ensure the cart state is linked to the user's profile
+#### 5. Update MySQL database schema to include shopping cart and related tables
 
-##### Create Shopping Cart Table
+##### Create Shopping Cart and Shopping Cart Items Tables
