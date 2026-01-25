@@ -1,7 +1,6 @@
+from sqlalchemy.orm import Session
 from backend.product_catalog_management.models.product import Product
 from backend.product_catalog_management.schemas.product_schema import ProductSchema
-from backend.product_catalog_management.schemas.product_update_schema import ProductUpdateSchema
-from sqlalchemy.orm import Session
 from marshmallow import ValidationError
 
 class ProductService:
@@ -10,29 +9,20 @@ class ProductService:
 
     def add_product(self, data: dict) -> Product:
         try:
-            product_data = ProductSchema().load(data)
+            valid_data = ProductSchema().load(data)
         except ValidationError as err:
             raise ValueError(f"Invalid data: {err.messages}")
 
-        new_product = Product(**product_data)
+        existing_product = self.session.query(Product).filter_by(name=valid_data['name']).first()
+        if existing_product:
+            raise ValueError("Product name already exists")
+
+        new_product = Product(**valid_data)
         self.session.add(new_product)
         self.session.commit()
+
         return new_product
 
-    def update_product(self, product_id: int, data: dict) -> Product:
-        try:
-            update_data = ProductUpdateSchema().load(data)
-        except ValidationError as err:
-            raise ValueError(f"Invalid data: {err.messages}")
+#### 3. Implement a controller to expose the API for product management
 
-        product = self.session.query(Product).filter_by(id=product_id).first()
-        if not product:
-            raise ValueError("Product not found")
-
-        for key, value in update_data.items():
-            setattr(product, key, value)
-
-        self.session.commit()
-        return product
-
-#### 4. Add the product update route and controller method
+##### ProductController
