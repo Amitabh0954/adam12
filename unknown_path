@@ -1,15 +1,12 @@
-To implement the feature allowing users to remove products from the shopping cart, ensuring that the total price is updated automatically and a confirmation is provided before removing an item, we follow the existing folder structure and extend the shopping cart functionality.
+To implement the feature allowing users to modify the quantity of products in their shopping cart, we need to ensure that quantity is always a positive integer and that the total price is recalculated whenever the quantity is modified.
 
 ### Implementation Plan:
 
-1. **Extend ShoppingCartService to handle item removal**.
-2. **Update ShoppingCartItem schema if necessary**.
-3. **Implement remove item endpoint in the shopping cart controller**.
-4. **Ensure routes are updated to include the new functionality**.
-5. **Update database schema if necessary to reflect any structural changes**.
+1. **Extend `ShoppingCartService` to handle quantity modification**.
+2. **Update the ShoppingCartController to include route for quantity modification**.
+3. **Ensure routes are updated to include the new functionality**.
+4. **Update the database schema if necessary to reflect any structural changes**.
 
 ### Implementation:
 
-#### 1. Extend ShoppingCartService to handle item removal
-
-##### ShoppingCartService
+#### 1. Extend ShoppingCartService to handle quantity modification
