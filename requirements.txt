@@ -7,10 +7,11 @@ werkzeug==2.0.2
 
 ### Summary
 
-This implementation of saving and retrieving the shopping cart state for logged-in users ensures that:
-- The cart state is saved to the user's profile.
-- The saved cart is retrievable across multiple sessions.
-- API endpoints are provided to handle saving and retrieving the cart state.
-- The MySQL database schema supports necessary fields for cart management.
+This implementation of the shopping cart functionality ensures that:
+- Shopping carts persist across sessions for logged-in users.
+- Guest users can add products to the cart, but the cart will reset on session expiration.
+- API endpoints are provided to handle shopping cart management.
+- The MySQL database schema supports necessary fields for cart persistence.
+- Products can be added to the shopping cart, enhancing the user shopping experience.
 
-With these elements in place, users will have their shopping cart state saved and retrievable, enhancing their convenience and loyalty.
+With these elements in place, the shopping cart functionality will allow users to add products to their cart and manage them effectively, providing a significant boost to the shopping experience.
