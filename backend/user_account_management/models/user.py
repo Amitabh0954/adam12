@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
@@ -6,6 +6,7 @@ Base = declarative_base()
 
 class User(Base):
     __tablename__ = 'users'
+    __table_args__ = (UniqueConstraint('email', name='unique_email'),)
 
     id = Column(Integer, primary_key=True)
     email = Column(String(255), unique=True, nullable=False)
@@ -16,6 +17,6 @@ class User(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-#### 2. Implement a service for profile management to handle updates
+#### 2. Implement services for user registration, ensuring email uniqueness and password security criteria
 
-##### ProfileService
+##### RegistrationService
