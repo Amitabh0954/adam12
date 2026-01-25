@@ -67,6 +67,16 @@ class ShoppingCartService:
             "total_price": total_price
         }
 
-#### 2. Implement a controller to expose the API for modifying quantities in the shopping cart
+    def save_cart_state(self, user_id: int, session_id: str = None) -> ShoppingCart:
+        cart = self.create_or_get_cart(user_id=user_id, session_id=session_id)
+        return cart
+
+    def retrieve_cart_state(self, user_id: int) -> ShoppingCart:
+        cart = self.session.query(ShoppingCart).filter_by(user_id=user_id).first()
+        if not cart:
+            raise ValueError("No saved cart found for the user")
+        return cart
+
+#### 2. Implement a controller to expose the API for saving and retrieving the cart state for logged-in users
 
 ##### ShoppingCartController
