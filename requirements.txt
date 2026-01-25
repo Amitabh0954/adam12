@@ -7,11 +7,10 @@ werkzeug==2.0.2
 
 ### Summary
 
-This implementation of updating product details ensures that:
-- Only an admin can update product details.
-- The price must be a numeric value.
-- The description can be modified but not removed.
-- API endpoints are provided to handle product management.
-- The MySQL database schema supports product information.
+This implementation of user registration ensures that:
+- Emails are unique.
+- Passwords meet security criteria.
+- API endpoints are provided for user registration.
+- The MySQL database schema supports user information.
 
-With these elements in place, the product management functionality will allow administrators to update existing products, ensuring all information remains current and accurate.
+With these elements in place, users will be able to register, enabling them to create personalized profiles and access their data.
