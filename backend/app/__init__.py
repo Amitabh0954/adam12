@@ -21,4 +21,4 @@ if __name__ == "__main__":
     app = create_app()
     app.run(debug=True)
 
-#### 7. Update the database schema to include the new fields for password recovery
+#### 7. Update the database schema to include the new fields
