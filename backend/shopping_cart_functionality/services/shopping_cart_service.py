@@ -60,4 +60,12 @@ class ShoppingCartService:
         self.session.refresh(cart)
         return cart
 
-#### 2. Implement the update quantity endpoint in the ShoppingCartController
+    def save_cart_state(self, user_id: int) -> ShoppingCart:
+        cart = self.get_cart(user_id)
+        self.session.commit()
+        return cart
+
+    def retrieve_cart_state(self, user_id: int) -> ShoppingCart:
+        return self.get_cart(user_id)
+
+#### 3. Implement the save and retrieve state endpoints in ShoppingCartController
