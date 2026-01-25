@@ -6,11 +6,13 @@ Base = declarative_base()
 
 class User(Base):
     __tablename__ = 'users'
-    
-    id = Column(Integer, primary_key=True)
-    email = Column(String, unique=True, nullable=False)
-    password = Column(String, nullable=False)
-    login_attempts = Column(Integer, default=0)
-    last_login = Column(DateTime, nullable=True)
 
-#### 2. Create `LoginSchema` for validating login requests
+    id = Column(Integer, primary_key=True)
+    email = Column(String(255), unique=True, nullable=False)
+    password = Column(String(255), nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+#### 2. Implement a service for user registration with password security checks
+
+##### UserService
