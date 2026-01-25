@@ -32,6 +32,6 @@ def reset_password(token):
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
-#### 4. Update routes to include the new password reset endpoint
+#### 4. Update routes to include the password reset endpoint
 
 ##### Updated Routes
