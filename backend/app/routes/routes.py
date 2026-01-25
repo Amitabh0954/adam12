@@ -4,7 +4,6 @@ from backend.user_account_management.controllers.password_reset_controller impor
 from backend.user_account_management.controllers.profile_controller import profile_controller
 from backend.product_catalog_management.controllers.product_controller import product_controller
 from backend.product_catalog_management.controllers.category_controller import category_controller
-from backend.shopping_cart_functionality.controllers.shopping_cart_controller import shopping_cart_controller
 
 def register_routes(app: Flask):
     app.register_blueprint(user_controller, url_prefix='/api')
@@ -12,6 +11,5 @@ def register_routes(app: Flask):
     app.register_blueprint(profile_controller, url_prefix='/api')
     app.register_blueprint(product_controller, url_prefix='/api')
     app.register_blueprint(category_controller, url_prefix='/api')
-    app.register_blueprint(shopping_cart_controller, url_prefix='/api')
 
-#### 6. Ensure integration with the main application initialization
+#### 7. Ensure main application integration
