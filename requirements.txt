@@ -7,10 +7,10 @@ werkzeug==2.0.2
 
 ### Summary
 
-This implementation of password recovery ensures that:
-- Password reset links expire after 24 hours.
-- Users verify their identity via email.
-- API endpoints are provided for generating and using password reset tokens.
-- The MySQL database schema supports password reset tokens.
+This implementation of saving and retrieving the shopping cart state for logged-in users ensures that:
+- The cart state is saved to the user's profile.
+- The saved cart is retrievable across multiple sessions.
+- API endpoints are provided to handle saving and retrieving the cart state.
+- The MySQL database schema supports necessary fields for cart management.
 
-With these elements in place, users will be able to recover their passwords securely, enhancing user retention and security.
+With these elements in place, users will have their shopping cart state saved and retrievable, enhancing their convenience and loyalty.
