@@ -1,17 +1,17 @@
-To implement saving the state of the shopping cart for logged-in users so that it can be retrieved across multiple sessions, we need to ensure the cart state is saved to the user's profile. We'll need to save this state whenever updates are made to the cart and retrieve it when the user logs back in.
+To implement the shopping cart functionality that persists across sessions for logged-in users and provides a temporary cart for guest users, we need to address several aspects of this functionality based on the provided folder structure and user story.
 
 ### Implementation Plan:
 
-1. **Ensure the ShoppingCart and ShoppingCartItem models are correctly associated with the User model.**
-2. **Update the ShoppingCartService to handle saving and retrieving the cart state.**
-3. **Update the ShoppingCartController to include endpoints for saving and retrieving the cart state.**
-4. **Ensure routes are updated to include the new functionality.**
-5. **Update the database schema if necessary to reflect any structural changes.**
+1. **Create the ShoppingCart and ShoppingCartItem models**.
+2. **Create databases and schemas for managing shopping carts**.
+3. **Implement shopping cart services for adding items**.
+4. **Implement shopping cart controllers for handling cart operations**.
+5. **Update routes to include shopping cart functionalities**.
+6. **Ensure integration with the main application initialization**.
+7. **Update database schema for shopping cart tables**.
 
 ### Implementation:
 
-#### 1. Ensure the ShoppingCart and ShoppingCartItem models are correctly associated with the User model
+#### 1. Create the ShoppingCart and ShoppingCartItem models
 
-Ensure the `ShoppingCart` model is associated with the user. This has already been structured in previous steps.
-
-#### 2. Update the ShoppingCartService to handle saving and retrieving the cart state
+##### ShoppingCart Model
