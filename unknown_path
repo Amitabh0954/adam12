@@ -1,16 +1,18 @@
-To implement the product categorization feature based on the user story and the provided folder structure, we will handle categorization in the `product_catalog_management` module. This will involve creating a category model to manage categories, implementing services for managing categories, and updating the product model or service to ensure products can be categorized.
+Based on the provided user story and folder structure, we need to implement the search functionality within the `product_catalog_management` module. This feature will allow users to search for products by names, categories, or attributes and ensure that the results are pageable.
 
 ### Implementation Plan
 
-1. **Create the Category model**: Define hierarchies and relationships.
-2. **Update Product model** to include category relationships.
-3. **Create a schema for managing categories**: `CategorySchema`.
-4. **Implement category management service**: Service methods for creating, updating, and deleting categories.
-5. **Implement the category management controller**: Controller for handling category requests.
-6. **Update routes**: Include routes for managing categories and integrating with product routes.
-7. **Ensure proper integration with the main application initialization**.
-8. **Create the database schema for categories**.
+1. **Update the `Product` model** (ensure it includes searchable attributes).
+2. **Create a schema for querying products**: `ProductSearchSchema` to validate the search queries.
+3. **Implement a search service** that performs search operations.
+4. **Implement the product search controller** that handles search requests.
+5. **Update routes** to include product search functionality.
+6. **Ensure proper integration with the main application initialization**.
 
 ### Implementation:
 
-#### 1. Create the Category model
+#### 1. Verify Product model (minimal adjustments for search attributes)
+
+Assuming categories and attributes are part of the initial implementation, ensure the Product model includes relevant fields.
+
+#### 2. Create `ProductSearchSchema` for validating product search queries
