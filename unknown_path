@@ -1,15 +1,15 @@
-Based on your additional user story and the given folder structure, we need to implement profile management functionality under the `user_account_management` module. This will involve updating the user model to support profile updates, creating the necessary services for managing profile updates, implementing the corresponding controllers, and ensuring routes for profile management are in place.
+Based on your user story and the given folder structure, we need to implement password recovery functionality in the `user_account_management` module. This will involve creating and updating models, services, controllers, and routes. The password recovery process will include generating a password reset link that expires after 24 hours and email verification for identity confirmation.
 
 ### Implementation Plan:
 
-1. **Update the User model**: Add fields for profile information.
-2. **Create a schema for user profile updates**: `ProfileUpdateSchema`.
-3. **Implement profile management service**: Service methods for managing profile updates.
-4. **Implement profile management controller**: Controller for handling profile update requests.
-5. **Update routes**: Include routes for profile management.
+1. **Update the User model**: Add fields for password reset token and expiration.
+2. **Create a schema for password reset**: `PasswordResetSchema`.
+3. **Implement password reset service**: Service methods for password recovery.
+4. **Implement password reset controller**: Controller for handling password reset requests.
+5. **Update routes**: Include routes for password reset.
 6. **Ensure main app initialization**: Proper integration of user account management routes.
-7. **Update database schema**: Accommodate new fields for profile information.
+7. **Update database schema**: Accommodate new fields.
 
 ### Implementation:
 
-#### 1. Update the `User` model to include profile information
+#### 1. Update the `User` model for password recovery
