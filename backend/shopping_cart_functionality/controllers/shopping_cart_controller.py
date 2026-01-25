@@ -1,89 +1,84 @@
-from flask import Blueprint, request, jsonify
-from backend.shopping_cart_functionality.services.shopping_cart_service import ShoppingCartService
+from flask import Blueprint, request, jsonify, session
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
+from backend.shopping_cart_functionality.services.shopping_cart_service import ShoppingCartService
 
-engine = create_engine('sqlite:///shopping_cart.db')
+engine = create_engine('mysql+pymysql://username:password@localhost:3306/databasename')
 Session = sessionmaker(bind=engine)
 
 shopping_cart_controller = Blueprint('shopping_cart_controller', __name__)
 
+@shopping_cart_controller.route('/cart', methods=['POST'])
+def add_product_to_cart():
+    session_db = Session()
+    cart_service = ShoppingCartService(session_db)
+    
+    user_id = request.json.get('user_id')  # For authenticated users
+    session_id = session.get('session_id')  # For guest users, ensuring session persists
+
+    if not session_id:
+        session_id = request.json.get('session_id')
+        session['session_id'] = session_id
+
+    product_id = request.json['product_id']
+    quantity = request.json['quantity']
+
+    cart = cart_service.create_or_get_cart(user_id=user_id, session_id=session_id)
+
+    try:
+        cart_item = cart_service.add_product_to_cart(cart, product_id, quantity)
+        return jsonify({
+            "cart_id": cart.id,
+            "product_id": cart_item.product_id,
+            "quantity": cart_item.quantity
+        }), 201
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
 @shopping_cart_controller.route('/cart', methods=['GET'])
-def get_cart():
-    session = Session()
-    shopping_cart_service = ShoppingCartService(session)
-    user_id = request.args.get('user_id', type=int)
+def get_cart_items():
+    session_db = Session()
+    cart_service = ShoppingCartService(session_db)
+    
+    user_id = request.args.get('user_id')  # For authenticated users
+    session_id = session.get('session_id')  # For guest users
 
-    cart = shopping_cart_service.get_cart(user_id)
-    cart_schema = ShoppingCartSchema()
-    return jsonify(cart_schema.dump(cart))
+    if not session_id:
+        session_id = request.args.get('session_id')
+        session['session_id'] = session_id
 
-@shopping_cart_controller.route('/cart/add', methods=['POST'])
-def add_to_cart():
-    session = Session()
-    shopping_cart_service = ShoppingCartService(session)
-    user_id = request.json.get('user_id')
+    cart = cart_service.create_or_get_cart(user_id=user_id, session_id=session_id)
+
+    cart_items = cart_service.get_cart_items(cart)
+    return jsonify(cart_items), 200
+
+@shopping_cart_controller.route('/cart', methods=['DELETE'])
+def remove_product_from_cart():
+    session_db = Session()
+    cart_service = ShoppingCartService(session_db)
+    
+    user_id = request.json.get('user_id')  # For authenticated users
+    session_id = session.get('session_id')  # For guest users
+
+    if not session_id:
+        session_id = request.json.get('session_id')
+        session['session_id'] = session_id
+
+    product_id = request.json['product_id']
+
+    cart = cart_service.create_or_get_cart(user_id=user_id, session_id=session_id)
+
+    confirmation = request.json.get('confirmation')
+    if not confirmation or confirmation != "yes":
+        return jsonify({"error": "Removal needs confirmation"}), 400
 
     try:
-        cart = shopping_cart_service.add_item_to_cart(user_id, request.json)
-        cart_schema = ShoppingCartSchema()
-        return jsonify(cart_schema.dump(cart)), 201
+        cart_service.remove_product_from_cart(cart, product_id)
+        cart_items = cart_service.get_cart_items(cart)
+        return jsonify(cart_items), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
-@shopping_cart_controller.route('/cart/remove', methods=['DELETE'])
-def remove_from_cart():
-    session = Session()
-    shopping_cart_service = ShoppingCartService(session)
-    user_id = request.json.get('user_id')
-    product_id = request.json.get('product_id')
+#### 3. Update routes to include the new shopping cart management endpoint for item removal
 
-    try:
-        cart = shopping_cart_service.remove_item_from_cart(user_id, product_id)
-        cart_schema = ShoppingCartSchema()
-        return jsonify(cart_schema.dump(cart)), 200
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-
-@shopping_cart_controller.route('/cart/update', methods=['PUT'])
-def update_item_quantity():
-    session = Session()
-    shopping_cart_service = ShoppingCartService(session)
-    user_id = request.json.get('user_id')
-    product_id = request.json.get('product_id')
-    new_quantity = request.json.get('quantity')
-
-    try:
-        cart = shopping_cart_service.update_item_quantity(user_id, product_id, new_quantity)
-        cart_schema = ShoppingCartSchema()
-        return jsonify(cart_schema.dump(cart)), 200
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-
-@shopping_cart_controller.route('/cart/save', methods=['POST'])
-def save_cart_state():
-    session = Session()
-    shopping_cart_service = ShoppingCartService(session)
-    user_id = request.json.get('user_id')
-
-    try:
-        cart = shopping_cart_service.save_cart_state(user_id)
-        cart_schema = ShoppingCartSchema()
-        return jsonify(cart_schema.dump(cart)), 200
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-
-@shopping_cart_controller.route('/cart/retrieve', methods=['GET'])
-def retrieve_cart_state():
-    session = Session()
-    shopping_cart_service = ShoppingCartService(session)
-    user_id = request.args.get('user_id', type=int)
-
-    try:
-        cart = shopping_cart_service.retrieve_cart_state(user_id)
-        cart_schema = ShoppingCartSchema()
-        return jsonify(cart_schema.dump(cart)), 200
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-
-#### 4. Ensure routes are updated to include the new functionality
+##### Updated Routes
