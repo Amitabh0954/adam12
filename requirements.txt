@@ -7,10 +7,10 @@ werkzeug==2.0.2
 
 ### Summary
 
-This implementation of user login ensures that:
-- Invalid login attempts are limited.
-- Sessions time out after inactivity.
-- API endpoints are provided for user login and session validation.
-- The MySQL database schema supports user sessions and login attempts.
+This implementation of modifying the quantity of products in the shopping cart ensures that:
+- The quantity must be a positive integer.
+- Modifying the quantity recalculates the total price automatically.
+- API endpoints are provided to handle the modification of product quantities in the shopping cart.
+- The MySQL database schema supports necessary fields for cart management.
 
-With these elements in place, users will be able to securely log into their accounts, manage their sessions, and access their personal dashboard and account details, enhancing user engagement and retention.
+With these elements in place, the shopping cart functionality will allow users to adjust their order quantities efficiently and manage their purchases flexibly.
