@@ -1,29 +1,27 @@
 from flask import Blueprint, request, jsonify
-from backend.user_account_management.services.user_service import UserService
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
+from backend.user_account_management.services.profile_service import ProfileService
+from backend.user_account_management.schemas.user_schema import UserSchema
 
-engine = create_engine('sqlite:///user.db')
+engine = create_engine('mysql+pymysql://username:password@localhost:3306/databasename')
 Session = sessionmaker(bind=engine)
 
 profile_controller = Blueprint('profile_controller', __name__)
 
-@profile_controller.route('/update-profile/<int:user_id>', methods=['PUT'])
+@profile_controller.route('/profile/<int:user_id>', methods=['PUT'])
 def update_profile(user_id):
     session = Session()
-    user_service = UserService(session)
-
+    profile_service = ProfileService(session)
+    
     try:
-        user = user_service.update_profile(user_id, request.json)
-        return jsonify({
-            "id": user.id, 
-            "email": user.email, 
-            "first_name": user.first_name, 
-            "last_name": user.last_name, 
-            "phone_number": user.phone_number, 
-            "address": user.address
-        }), 200
+        data = request.json
+        user = profile_service.update_profile(user_id, data)
+        user_schema = UserSchema()
+        return jsonify(user_schema.dump(user)), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
-#### 5. Update routes to include profile management functionality
+#### 4. Update routes to include the profile management endpoint
+
+##### Updated Routes
