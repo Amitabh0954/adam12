@@ -1,15 +1,16 @@
-To implement the functionality for saving and retrieving the shopping cart state for logged-in users, we need to follow these steps:
+To implement the shopping cart functionality, ensuring it persists across sessions for logged-in users and allows guest users to add products temporarily, we need to follow these steps based on the provided folder structure and user story:
 
 ### Implementation Plan:
 
-1. **Extend the ShoppingCartService to handle saving the cart state to the user's profile.**
-2. **Implement a controller to expose the API for saving and retrieving the cart state for logged-in users.**
-3. **Update routes to include the new shopping cart management endpoint for saving and retrieving the cart state.**
-4. **Update MySQL database schema to ensure the cart state is linked to the user's profile.**
-5. **Ensure this feature works by initializing it in the application.**
+1. **Define the models for ShoppingCart and ShoppingCartItem.**
+2. **Implement services to handle adding and managing items in the shopping cart.**
+3. **Implement a controller to expose the API for managing the shopping cart.**
+4. **Update routes to include the new shopping cart management endpoint.**
+5. **Update MySQL database schema to include shopping cart and related tables.**
+6. **Ensure this feature works by initializing it in the application.**
 
 ### Implementation:
 
-#### 1. Extend the ShoppingCartService to handle saving the cart state to the user's profile
+#### 1. Define the models for ShoppingCart and ShoppingCartItem
 
-##### Updated ShoppingCartService
+##### Shopping Cart Models
