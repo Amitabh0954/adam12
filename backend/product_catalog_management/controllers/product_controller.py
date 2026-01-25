@@ -16,8 +16,8 @@ def add_product():
     try:
         product = product_service.add_product(request.json)
         return jsonify({
-            "id": product.id, 
-            "name": product.name, 
+            "id": product.id,
+            "name": product.name,
             "price": product.price,
             "description": product.description
         }), 201
@@ -32,8 +32,8 @@ def update_product(product_id):
     try:
         product = product_service.update_product(product_id, request.json)
         return jsonify({
-            "id": product.id, 
-            "name": product.name, 
+            "id": product.id,
+            "name": product.name,
             "price": product.price,
             "description": product.description
         }), 200
@@ -54,4 +54,20 @@ def delete_product(product_id):
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
-#### 5. Update routes to include product deletion
+@product_controller.route('/search-products', methods=['GET'])
+def search_products():
+    session = Session()
+    product_service = ProductService(session)
+    try:
+        query_params = request.args.to_dict()
+        products = product_service.search_products(query_params)
+        return jsonify([{
+            "id": product.id,
+            "name": product.name,
+            "price": product.price,
+            "description": product.description
+        } for product in products]), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+#### 5. Update routes to include product search
