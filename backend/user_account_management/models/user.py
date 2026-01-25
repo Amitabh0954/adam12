@@ -10,9 +10,12 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String(255), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
+    first_name = Column(String(50), nullable=True)
+    last_name = Column(String(50), nullable=True)
+    preferences = Column(String(255), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-#### 2. Implement a service for user registration with password security checks
+#### 2. Implement a service for profile management to handle updates
 
-##### UserService
+##### ProfileService
