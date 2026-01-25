@@ -31,4 +31,18 @@ def add_to_cart():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
-#### 5. Update routes to include shopping cart functionality
+@shopping_cart_controller.route('/cart/remove', methods=['DELETE'])
+def remove_from_cart():
+    session = Session()
+    shopping_cart_service = ShoppingCartService(session)
+    user_id = request.json.get('user_id')
+    product_id = request.json.get('product_id')
+
+    try:
+        cart = shopping_cart_service.remove_item_from_cart(user_id, product_id)
+        cart_schema = ShoppingCartSchema()
+        return jsonify(cart_schema.dump(cart)), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+#### 4. Ensure routes are updated to include the new functionality
