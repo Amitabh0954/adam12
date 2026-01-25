@@ -1,71 +1,57 @@
 from sqlalchemy.orm import Session
-from backend.shopping_cart_functionality.models.shopping_cart import ShoppingCart
-from backend.shopping_cart_functionality.models.shopping_cart_item import ShoppingCartItem
-from backend.shopping_cart_functionality.schemas.shopping_cart_schema import ShoppingCartSchema, ShoppingCartItemSchema
-from marshmallow import ValidationError
+from backend.shopping_cart_functionality.models.shopping_cart import ShoppingCart, ShoppingCartItem
+from backend.product_catalog_management.models.product import Product
+from typing import Dict
 
 class ShoppingCartService:
     def __init__(self, session: Session):
         self.session = session
 
-    def get_cart(self, user_id: int) -> ShoppingCart:
-        cart = self.session.query(ShoppingCart).filter_by(user_id=user_id).first()
+    def create_or_get_cart(self, user_id: int = None, session_id: str = None) -> ShoppingCart:
+        if user_id:
+            cart = self.session.query(ShoppingCart).filter_by(user_id=user_id).first()
+        else:
+            cart = self.session.query(ShoppingCart).filter_by(session_id=session_id).first()
+
         if not cart:
-            cart = ShoppingCart(user_id=user_id)
+            cart = ShoppingCart(user_id=user_id, session_id=session_id)
             self.session.add(cart)
             self.session.commit()
+
         return cart
 
-    def add_item_to_cart(self, user_id: int, data: dict) -> ShoppingCart:
-        cart = self.get_cart(user_id)
-        try:
-            item_data = ShoppingCartItemSchema().load(data)
-        except ValidationError as err:
-            raise ValueError(f"Invalid data: {err.messages}")
+    def add_product_to_cart(self, cart: ShoppingCart, product_id: int, quantity: int) -> ShoppingCartItem:
+        product = self.session.query(Product).get(product_id)
+        if not product:
+            raise ValueError("Product not found")
 
-        item = self.session.query(ShoppingCartItem).filter_by(cart_id=cart.id, product_id=item_data['product_id']).first()
-        if item:
-            item.quantity += item_data['quantity']
+        cart_item = self.session.query(ShoppingCartItem).filter_by(cart_id=cart.id, product_id=product_id).first()
+        if cart_item:
+            cart_item.quantity += quantity
         else:
-            item = ShoppingCartItem(cart_id=cart.id, **item_data)
-            self.session.add(item)
+            cart_item = ShoppingCartItem(cart_id=cart.id, product_id=product_id, quantity=quantity)
+            self.session.add(cart_item)
 
         self.session.commit()
-        self.session.refresh(cart)
-        return cart
+        return cart_item
 
-    def remove_item_from_cart(self, user_id: int, product_id: int) -> ShoppingCart:
-        cart = self.get_cart(user_id)
-        item = self.session.query(ShoppingCartItem).filter_by(cart_id=cart.id, product_id=product_id).first()
-        if not item:
-            raise ValueError("Item not found in cart")
+    def remove_product_from_cart(self, cart: ShoppingCart, product_id: int) -> None:
+        cart_item = self.session.query(ShoppingCartItem).filter_by(cart_id=cart.id, product_id=product_id).first()
+        if not cart_item:
+            raise ValueError("Product not found in cart")
 
-        self.session.delete(item)
+        self.session.delete(cart_item)
         self.session.commit()
-        self.session.refresh(cart)
-        return cart
-        
-    def update_item_quantity(self, user_id: int, product_id: int, new_quantity: int) -> ShoppingCart:
-        if new_quantity < 1:
-            raise ValueError("Quantity must be a positive integer")
-            
-        cart = self.get_cart(user_id)
-        item = self.session.query(ShoppingCartItem).filter_by(cart_id=cart.id, product_id=product_id).first()
-        if not item:
-            raise ValueError("Item not found in cart")
-            
-        item.quantity = new_quantity
-        
-        self.session.commit()
-        self.session.refresh(cart)
-        return cart
 
-    def save_cart_state(self, user_id: int) -> ShoppingCart:
-        cart = self.get_cart(user_id)
-        self.session.commit()
-        return cart
+    def get_cart_items(self, cart: ShoppingCart) -> Dict:
+        items = self.session.query(ShoppingCartItem).filter_by(cart_id=cart.id).all()
+        total_price = sum(item.product.price * item.quantity for item in items)
+        return {
+            "cart_id": cart.id,
+            "items": [{"product_id": item.product_id, "quantity": item.quantity, "price": item.product.price} for item in items],
+            "total_price": total_price
+        }
 
-    def retrieve_cart_state(self, user_id: int) -> ShoppingCart:
-        return self.get_cart(user_id)
+#### 2. Implement a controller to expose the API for removing items from the shopping cart with confirmation
 
-#### 3. Implement the save and retrieve state endpoints in ShoppingCartController
+##### ShoppingCartController
