@@ -7,10 +7,10 @@ werkzeug==2.0.2
 
 ### Summary
 
-This implementation of modifying the quantity of products in the shopping cart ensures that:
-- The quantity must be a positive integer.
-- Modifying the quantity recalculates the total price automatically.
-- API endpoints are provided to handle the modification of product quantities in the shopping cart.
-- The MySQL database schema supports necessary fields for cart management.
+This implementation of password recovery ensures that:
+- Password reset links expire after 24 hours.
+- Users verify their identity via email.
+- API endpoints are provided for generating and using password reset tokens.
+- The MySQL database schema supports password reset tokens.
 
-With these elements in place, the shopping cart functionality will allow users to adjust their order quantities efficiently and manage their purchases flexibly.
+With these elements in place, users will be able to recover their passwords securely, enhancing user retention and security.
