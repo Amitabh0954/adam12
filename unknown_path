@@ -1,14 +1,19 @@
-To implement the functionality for removing products from the shopping cart, ensuring that the total price updates automatically and users see a confirmation before the removal, we need to follow these steps:
+To implement the user login functionality with the constraints on invalid login attempts and session timeout after inactivity, we need to follow these steps:
 
 ### Implementation Plan:
 
-1. **Extend the ShoppingCartService to handle removing items from the cart and updating the total price.**
-2. **Implement a controller to expose the API for removing items from the shopping cart with confirmation.**
-3. **Update routes to include the new shopping cart management endpoint for item removal.**
-4. **Ensure this feature works by initializing it in the application.**
+1. **Define the models for User, UserSession, and LoginAttempt.**
+2. **Implement services for user authentication and session management.**
+3. **Implement a controller to expose the API for user login.**
+4. **Update routes to include the new user login endpoint.**
+5. **Update MySQL database schema to include the necessary tables.**
+6. **Ensure this feature works by initializing it in the application.**
 
 ### Implementation:
 
-#### 1. Extend the ShoppingCartService to handle removing items from the cart and updating the total price
+#### 1. Define the models for User, UserSession, and LoginAttempt
 
-##### Updated ShoppingCartService
+##### User Model
+Assuming this model is consistent with the previous registration functionality.
+
+##### UserSession Model
