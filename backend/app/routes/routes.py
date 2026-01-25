@@ -1,15 +1,9 @@
 from flask import Flask
 from backend.user_account_management.controllers.registration_controller import registration_controller
-from backend.user_account_management.controllers.auth_controller import auth_controller
-from backend.user_account_management.controllers.password_reset_controller import password_reset_controller
-from backend.user_account_management.controllers.profile_controller import profile_controller
-from backend.product_catalog_management.controllers.product_controller import product_controller
 
 def register_routes(app: Flask):
     app.register_blueprint(registration_controller, url_prefix='/api')
-    app.register_blueprint(auth_controller, url_prefix='/api')
-    app.register_blueprint(password_reset_controller, url_prefix='/api')
-    app.register_blueprint(profile_controller, url_prefix='/api')
-    app.register_blueprint(product_controller, url_prefix='/api')
 
-##### Updated Product Schema
+#### 5. Update MySQL database schema to ensure constraints are applied
+
+##### Create Users Table
