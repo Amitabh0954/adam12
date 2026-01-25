@@ -79,6 +79,30 @@ def remove_product_from_cart():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
-#### 3. Update routes to include the new shopping cart management endpoint for item removal
+@shopping_cart_controller.route('/cart/modify', methods=['PUT'])
+def modify_product_quantity():
+    session_db = Session()
+    cart_service = ShoppingCartService(session_db)
+    
+    user_id = request.json.get('user_id')  # For authenticated users
+    session_id = session.get('session_id')  # For guest users
+
+    if not session_id:
+        session_id = request.json.get('session_id')
+        session['session_id'] = session_id
+
+    product_id = request.json['product_id']
+    quantity = request.json['quantity']
+
+    cart = cart_service.create_or_get_cart(user_id=user_id, session_id=session_id)
+
+    try:
+        cart_item = cart_service.modify_product_quantity(cart, product_id, quantity)
+        cart_items = cart_service.get_cart_items(cart)
+        return jsonify(cart_items), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+#### 3. Update routes to include the new shopping cart management endpoint for quantity modification
 
 ##### Updated Routes
