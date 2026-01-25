@@ -7,11 +7,7 @@ class ProfileService:
     def __init__(self, session: Session):
         self.session = session
 
-    def get_user_profile(self, user_id: int) -> User:
-        user = self.session.query(User).get(user_id)
-        return user
-
-    def update_user_profile(self, user_id: int, data: dict) -> User:
+    def update_profile(self, user_id: int, data: dict) -> User:
         user = self.session.query(User).get(user_id)
         if not user:
             raise ValueError("User not found")
@@ -23,9 +19,10 @@ class ProfileService:
 
         for key, value in valid_data.items():
             setattr(user, key, value)
-
+        
         self.session.commit()
-
         return user
 
-#### 3. Implement a controller to expose the API for profile management
+#### 3. Implement a controller to expose the API for profile updates
+
+##### ProfileController
