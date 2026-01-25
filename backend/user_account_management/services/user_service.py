@@ -1,12 +1,10 @@
 from backend.user_account_management.models.user import User
 from backend.user_account_management.schemas.user_schema import UserSchema
 from backend.user_account_management.schemas.login_schema import LoginSchema
-from backend.user_account_management.schemas.password_reset_schema import PasswordResetRequestSchema, PasswordResetSchema
 from sqlalchemy.orm import Session
 from marshmallow import ValidationError
-from werkzeug.security import check_password_hash, generate_password_hash
-from datetime import datetime, timedelta
-import secrets
+from werkzeug.security import check_password_hash
+from datetime import datetime
 
 class UserService:
     MAX_INVALID_ATTEMPTS = 5
@@ -48,24 +46,4 @@ class UserService:
         self.session.commit()
         return user
 
-    def initiate_password_reset(self, email: str) -> str:
-        user = self.session.query(User).filter_by(email=email).first()
-        if not user:
-            raise ValueError("User not found")
-
-        user.reset_token = secrets.token_urlsafe()
-        user.reset_token_expires_at = datetime.utcnow() + timedelta(hours=24)
-        self.session.commit()
-        return user.reset_token
-
-    def reset_password(self, token: str, new_password: str):
-        user = self.session.query(User).filter_by(reset_token=token).first()
-        if not user or user.reset_token_expires_at < datetime.utcnow():
-            raise ValueError("Invalid or expired token")
-
-        user.password = generate_password_hash(new_password)
-        user.reset_token = None
-        user.reset_token_expires_at = None
-        self.session.commit()
-
-#### 4. Implement password reset controller
+#### 4. Implement login controller
