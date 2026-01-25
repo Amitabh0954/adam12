@@ -1,15 +1,15 @@
-To implement profile management functionality, ensuring that profile updates are saved correctly and changes are reflected immediately, we need to:
+To implement the functionality for saving and retrieving the shopping cart state for logged-in users, we need to follow these steps:
 
 ### Implementation Plan:
 
-1. **Update the User model to include additional profile information.**
-2. **Implement a service for profile management to handle updates.**
-3. **Implement a controller to expose the API for profile updates.**
-4. **Update routes to include the new profile management endpoint.**
+1. **Extend the ShoppingCartService to handle saving the cart state to the user's profile.**
+2. **Implement a controller to expose the API for saving and retrieving the cart state for logged-in users.**
+3. **Update routes to include the new shopping cart management endpoint for saving and retrieving the cart state.**
+4. **Update MySQL database schema to ensure the cart state is linked to the user's profile.**
 5. **Ensure this feature works by initializing it in the application.**
 
 ### Implementation:
 
-#### 1. Update the User model to include additional profile information
+#### 1. Extend the ShoppingCartService to handle saving the cart state to the user's profile
 
-##### User Model
+##### Updated ShoppingCartService
