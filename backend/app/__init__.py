@@ -8,11 +8,10 @@ from backend.user_account_management.models.login_attempt import Base as LoginAt
 from backend.user_account_management.models.password_reset_token import Base as PasswordResetTokenBase
 from backend.product_catalog_management.models.product import Base as ProductBase
 from backend.product_catalog_management.models.category import Base as CategoryBase
-from backend.shopping_cart_functionality.models.shopping_cart import Base as ShoppingCartBase
 
 def create_app():
     app = Flask(__name__)
-    app.secret_key = "supersecretkey"  # Ensure session management
+    app.secret_key = "supersecretkey"
 
     # Initialize the database
     user_engine = create_engine('mysql+pymysql://username:password@localhost:3306/databasename')
@@ -23,7 +22,6 @@ def create_app():
     PasswordResetTokenBase.metadata.create_all(user_engine)
     ProductBase.metadata.create_all(user_engine)
     CategoryBase.metadata.create_all(user_engine)
-    ShoppingCartBase.metadata.create_all(user_engine)
 
     # Register routes
     register_routes(app)
