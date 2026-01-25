@@ -3,4 +3,4 @@ sqlalchemy==1.4.27
 marshmallow==3.14.1
 werkzeug==2.0.2
 
-This structure ensures that your Flask application now includes password recovery functionality, allowing users to reset their passwords securely. The functionality includes generating a one-time token for password reset that expires after 24 hours and integrates smoothly into the existing folder structure and application architecture.
+This structure ensures a clean organization of your Flask application with modularized components for user account management, including user registration and login functionalities.
