@@ -9,6 +9,6 @@ class UserSchema(Schema):
     created_at = fields.DateTime(dump_only=True)
     updated_at = fields.DateTime(dump_only=True)
 
-#### 5. Update MySQL database schema to include these profile fields
+#### 4. Update routes to include the new user registration endpoint
 
-##### Create Users Table
+##### Updated Routes
