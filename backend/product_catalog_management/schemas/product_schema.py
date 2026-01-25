@@ -1,8 +1,9 @@
-from marshmallow import Schema, fields, validate
+from marshmallow import Schema, fields
 
 class ProductSchema(Schema):
-    name = fields.String(required=True, validate=[validate.Length(min=1, max=255)])
-    price = fields.Float(required=True, validate=[validate.Range(min=0.01)])
-    description = fields.String(required=True, validate=[validate.Length(min=1)])
+    id = fields.Int(dump_only=True)
+    name = fields.Str(required=True)
+    price = fields.Float(required=True)
+    description = fields.Str(required=True)
 
-#### 3. Implement the product management service
+#### 4. Update routes to include the new product management endpoint
