@@ -1,7 +1,16 @@
-Flask==2.1.1
-Flask-SQLAlchemy==2.5.1
+flask==2.1.1
+sqlalchemy==1.4.27
 marshmallow==3.14.1
-Werkzeug==2.1.1
-Flask-Session==0.4.0
-Flask-Mail==0.9.1
-Flask-JWT-Extended==4.3.1
+werkzeug==2.0.2
+
+### Summary
+
+- **Shopping Cart Models**: Define shopping carts and cart items.
+- **Schemas**: Validate shopping cart data.
+- **Services**: Handle cart operations (adding items, viewing cart).
+- **Controllers**: Expose endpoints for interacting with shopping carts.
+- **Routes**: Include shopping cart routes in the app.
+- **Database Initialization**: Ensure models are created and schema is applied.
+- **Schema Definitions**: SQL scripts for table creation.
+
+This implementation will ensure that the shopping cart functionality is integrated well into the existing structure, persistent for logged-in users, and provides temporary shopping cart functionality for guest users.
