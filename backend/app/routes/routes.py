@@ -16,10 +16,10 @@ def register_routes(app: Flask):
 
 ### Summary
 
-This implementation focuses on enhancing the shopping cart functionality by allowing users to remove items from their cart while ensuring the total price is updated and providing confirmation before removal. The changes made include:
+The implementation ensures that the shopping cart allows users to modify the quantity of products, ensures quantity is positive, and recalculates the total price. The changes made include:
 
-- **Extending Services** to handle item removal from the cart.
-- **Updating Controllers** to expose endpoints for cart removal.
+- **Extending Services** to handle item quantity updates.
+- **Updating Controllers** to expose endpoints for modifying quantity.
 - **Ensuring Routes** include the necessary endpoints for shopping cart operations.
 
-With all these changes integrated, the shopping cart functionality will be robust, allowing both adding and removing items securely and efficiently.
+With all these changes integrated, the shopping cart functionality will provide flexibility in managing the quantity of items before checkout.
