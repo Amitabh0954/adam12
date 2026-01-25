@@ -10,12 +10,4 @@ def register_routes(app: Flask):
     app.register_blueprint(profile_controller, url_prefix='/api')
     app.register_blueprint(product_controller, url_prefix='/api')
 
-### Summary:
-
-This set of implementations covers the functionality of allowing an admin to update existing product details with appropriate validations and ensuring integration with the current Flask application structure. The routes ensure proper handling of requests, and the service methods encapsulate the logic for managing persistence and business rules.
-
-- **Product model** is already properly defined.
-- **ProductUpdateSchema** ensures robust validation.
-- **ProductService** handles business logic for updating products.
-- **ProductController** provides the API endpoints for product updates.
-- **Routes** integration maintains the overall coherence.
+#### 6. Ensure the main app initialization properly integrates the new routes
