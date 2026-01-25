@@ -1,12 +1,17 @@
-To implement the feature allowing users to modify the quantity of products in their shopping cart, we need to ensure that quantity is always a positive integer and that the total price is recalculated whenever the quantity is modified.
+To implement saving the state of the shopping cart for logged-in users so that it can be retrieved across multiple sessions, we need to ensure the cart state is saved to the user's profile. We'll need to save this state whenever updates are made to the cart and retrieve it when the user logs back in.
 
 ### Implementation Plan:
 
-1. **Extend `ShoppingCartService` to handle quantity modification**.
-2. **Update the ShoppingCartController to include route for quantity modification**.
-3. **Ensure routes are updated to include the new functionality**.
-4. **Update the database schema if necessary to reflect any structural changes**.
+1. **Ensure the ShoppingCart and ShoppingCartItem models are correctly associated with the User model.**
+2. **Update the ShoppingCartService to handle saving and retrieving the cart state.**
+3. **Update the ShoppingCartController to include endpoints for saving and retrieving the cart state.**
+4. **Ensure routes are updated to include the new functionality.**
+5. **Update the database schema if necessary to reflect any structural changes.**
 
 ### Implementation:
 
-#### 1. Extend ShoppingCartService to handle quantity modification
+#### 1. Ensure the ShoppingCart and ShoppingCartItem models are correctly associated with the User model
+
+Ensure the `ShoppingCart` model is associated with the user. This has already been structured in previous steps.
+
+#### 2. Update the ShoppingCartService to handle saving and retrieving the cart state
