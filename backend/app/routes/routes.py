@@ -16,10 +16,10 @@ def register_routes(app: Flask):
 
 ### Summary
 
-The implementation ensures that the shopping cart allows users to modify the quantity of products, ensures quantity is positive, and recalculates the total price. The changes made include:
+This implementation makes sure the shopping cart state is saved to the user's profile and can be retrieved across multiple sessions. The changes made include:
 
-- **Extending Services** to handle item quantity updates.
-- **Updating Controllers** to expose endpoints for modifying quantity.
+- **Extending Services** to handle saving and retrieving the cart state.
+- **Updating Controllers** to include endpoints for save and retrieve functionality.
 - **Ensuring Routes** include the necessary endpoints for shopping cart operations.
 
-With all these changes integrated, the shopping cart functionality will provide flexibility in managing the quantity of items before checkout.
+These changes will ensure that the shopping cart functionality provides a seamless and persistent shopping experience for logged-in users.
