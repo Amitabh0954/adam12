@@ -29,4 +29,4 @@ if __name__ == "__main__":
     app = create_app()
     app.run(debug=True)
 
-#### 6. Update MySQL database schema
+#### 7. Update requirements.txt
