@@ -7,11 +7,6 @@ class ProductSchema(Schema):
     price = fields.Float(required=True)
     is_available = fields.Bool()
 
-    @validates('name')
-    def validate_name(self, value: str) -> None:
-        if not value:
-            raise ValidationError("Product name cannot be empty")
-
     @validates('price')
     def validate_price(self, value: float) -> None:
         if value <= 0:
@@ -22,6 +17,4 @@ class ProductSchema(Schema):
         if not value:
             raise ValidationError("Description cannot be empty")
 
-#### 4. Update routes to include the new product addition endpoint
-
-##### Updated Routes
+#### 5. Ensure this feature works by initializing it in the application
