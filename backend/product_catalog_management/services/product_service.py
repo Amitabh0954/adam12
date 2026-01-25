@@ -1,17 +1,14 @@
 from backend.product_catalog_management.models.product import Product
 from backend.product_catalog_management.schemas.product_schema import ProductSchema
 from backend.product_catalog_management.schemas.product_update_schema import ProductUpdateSchema
+from backend.product_catalog_management.schemas.product_search_schema import ProductSearchSchema
 from sqlalchemy.orm import Session
 from marshmallow import ValidationError
-
-def is_admin(user_id: int) -> bool:
-    # Placeholder check. Implement actual admin verification here.
-    return user_id == 1  # Example hardcoded admin ID
 
 class ProductService:
     def __init__(self, session: Session):
         self.session = session
-    
+
     def add_product(self, data: dict) -> Product:
         try:
             product_data = ProductSchema().load(data)
@@ -40,9 +37,6 @@ class ProductService:
         return product
 
     def delete_product(self, user_id: int, product_id: int) -> None:
-        if not is_admin(user_id):
-            raise PermissionError("Only admins can delete products")
-
         product = self.session.query(Product).filter_by(id=product_id).first()
         if not product:
             raise ValueError("Product not found")
@@ -50,4 +44,21 @@ class ProductService:
         self.session.delete(product)
         self.session.commit()
 
-#### 4. Implement the controller to handle delete requests
+    def search_products(self, query: dict):
+        try:
+            search_data = ProductSearchSchema().load(query)
+        except ValidationError as err:
+            raise ValueError(f"Invalid search data: {err.messages}")
+
+        page = search_data['page']
+        size = search_data['size']
+        search_query = search_data['query']
+        
+        products = self.session.query(Product).filter(
+            Product.name.ilike(f"%{search_query}%") | 
+            Product.description.ilike(f"%{search_query}%")
+        ).limit(size).offset((page - 1) * size).all()
+
+        return products
+
+#### 4. Implement the product search controller
