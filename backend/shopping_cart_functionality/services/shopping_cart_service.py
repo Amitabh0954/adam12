@@ -21,9 +21,6 @@ class ShoppingCartService:
         return cart
 
     def add_product_to_cart(self, cart: ShoppingCart, product_id: int, quantity: int) -> ShoppingCartItem:
-        if quantity <= 0:
-            raise ValueError("Quantity must be a positive integer")
-        
         product = self.session.query(Product).get(product_id)
         if not product:
             raise ValueError("Product not found")
@@ -38,45 +35,13 @@ class ShoppingCartService:
         self.session.commit()
         return cart_item
 
-    def modify_product_quantity(self, cart: ShoppingCart, product_id: int, quantity: int) -> ShoppingCartItem:
-        if quantity <= 0:
-            raise ValueError("Quantity must be a positive integer")
-        
-        cart_item = self.session.query(ShoppingCartItem).filter_by(cart_id=cart.id, product_id=product_id).first()
-        if not cart_item:
-            raise ValueError("Product not found in cart")
-
-        cart_item.quantity = quantity
-        self.session.commit()
-        return cart_item
-
-    def remove_product_from_cart(self, cart: ShoppingCart, product_id: int) -> None:
-        cart_item = self.session.query(ShoppingCartItem).filter_by(cart_id=cart.id, product_id=product_id).first()
-        if not cart_item:
-            raise ValueError("Product not found in cart")
-
-        self.session.delete(cart_item)
-        self.session.commit()
-
     def get_cart_items(self, cart: ShoppingCart) -> Dict:
         items = self.session.query(ShoppingCartItem).filter_by(cart_id=cart.id).all()
-        total_price = sum(item.product.price * item.quantity for item in items)
         return {
             "cart_id": cart.id,
-            "items": [{"product_id": item.product_id, "quantity": item.quantity, "price": item.product.price} for item in items],
-            "total_price": total_price
+            "items": [{"product_id": item.product_id, "quantity": item.quantity} for item in items]
         }
 
-    def save_cart_state(self, user_id: int, session_id: str = None) -> ShoppingCart:
-        cart = self.create_or_get_cart(user_id=user_id, session_id=session_id)
-        return cart
-
-    def retrieve_cart_state(self, user_id: int) -> ShoppingCart:
-        cart = self.session.query(ShoppingCart).filter_by(user_id=user_id).first()
-        if not cart:
-            raise ValueError("No saved cart found for the user")
-        return cart
-
-#### 2. Implement a controller to expose the API for saving and retrieving the cart state for logged-in users
+#### 3. Implement a controller to expose the API for managing the shopping cart
 
 ##### ShoppingCartController
