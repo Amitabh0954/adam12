@@ -34,6 +34,6 @@ if __name__ == "__main__":
     app = create_app()
     app.run(debug=True)
 
-#### 6. Update requirements.txt
+#### 7. Update requirements.txt
 
 ##### Requirements File
