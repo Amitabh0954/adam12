@@ -1,14 +1,16 @@
-To implement the functionality for modifying the quantity of products in the shopping cart and recalculating the total price, we need to follow these steps:
+To implement the password recovery functionality, ensuring that password reset links expire after 24 hours and users verify their identity via email, we need to follow these steps:
 
 ### Implementation Plan:
 
-1. **Extend the ShoppingCartService to handle modifying quantities of items and updating the total price.**
-2. **Implement a controller to expose the API for modifying quantities in the shopping cart.**
-3. **Update routes to include the new shopping cart management endpoint for quantity modification.**
-4. **Ensure this feature works by initializing it in the application.**
+1. **Define the PasswordResetToken model.**
+2. **Implement services for generating and validating password reset tokens.**
+3. **Implement a controller to expose the API for password recovery.**
+4. **Update routes to include the new password reset endpoint.**
+5. **Update MySQL database schema to include the password reset token table.**
+6. **Ensure this feature works by initializing it in the application.**
 
 ### Implementation:
 
-#### 1. Extend the ShoppingCartService to handle modifying quantities of items and updating the total price
+#### 1. Define the PasswordResetToken model
 
-##### Updated ShoppingCartService
+##### PasswordResetToken Model
