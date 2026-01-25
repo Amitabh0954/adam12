@@ -7,11 +7,11 @@ werkzeug==2.0.2
 
 ### Summary
 
-This implementation of adding new products ensures that:
-- Product names are unique.
-- Product prices are positive numbers.
-- Product descriptions are non-empty.
-- API endpoint is provided to handle product management.
-- The MySQL database schema is updated to accommodate product information.
+This implementation of updating product details ensures that:
+- Only an admin can update product details.
+- The price must be a numeric value.
+- The description can be modified but not removed.
+- API endpoints are provided to handle product management.
+- The MySQL database schema supports product information.
 
-With these elements in place, the product management functionality will allow administrators to add new products to the inventory, providing essential catalog management capabilities.
+With these elements in place, the product management functionality will allow administrators to update existing products, ensuring all information remains current and accurate.
