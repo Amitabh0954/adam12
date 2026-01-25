@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
@@ -10,11 +10,8 @@ class LoginAttempt(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     attempt_time = Column(DateTime, default=datetime.utcnow)
+    successful = Column(Integer, default=False)
 
-#### 2. Implement authentication logic, including hashing and validation of passwords
-
-Already implemented in `password_service.py`.
-
-#### 3. Implement a service to handle login attempts and manage sessions
+#### 2. Implement services for user authentication and session management
 
 ##### AuthService
