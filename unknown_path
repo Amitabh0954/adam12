@@ -1,1 +1,1 @@
-Given the user story for modifying the quantity of products in the shopping cart and ensuring the total price recalculates, we will generate the required modules for this new feature according to the provided folder structure and constraints.
+Given the user story for removing products from the shopping cart and ensuring the total price updates automatically, we will generate the required modules for this new feature according to the provided folder structure and constraints.
