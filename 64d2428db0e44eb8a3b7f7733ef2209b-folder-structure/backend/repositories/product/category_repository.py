@@ -1,7 +1,7 @@
 # Epic Title: Product Catalog Management
 
 from backend.models.product.category import Category
-from typing import Optional
+from typing import Optional, List
 
 class CategoryRepository:
     def __init__(self):
@@ -16,6 +16,10 @@ class CategoryRepository:
         # logic to retrieve a category by id
         pass
 
+    def get_all_categories(self) -> List[Category]:
+        # logic to retrieve all categories
+        pass
+
     def update_category(self, category: Category) -> None:
-        # logic to update category in the database
+        # logic to update the category in the database
         pass
