@@ -15,9 +15,6 @@ from backend.services.product.admin_product_service import AdminProductService
 from backend.services.product.admin_delete_product_service import AdminDeleteProductService
 from backend.services.product.search_product_service import SearchProductService
 from backend.repositories.product.category_repository import CategoryRepository
-from backend.services.product.category_service import CategoryService
-from backend.repositories.product.product_category_repository import ProductCategoryRepository
-from backend.services.product.product_category_service import ProductCategoryService
 
 app = Flask(__name__)
 
@@ -35,9 +32,6 @@ admin_product_service = AdminProductService(product_repository)
 delete_product_service = AdminDeleteProductService(product_repository)
 search_product_service = SearchProductService(product_repository)
 category_repository = CategoryRepository()
-category_service = CategoryService(category_repository)
-product_category_repository = ProductCategoryRepository()
-product_category_service = ProductCategoryService(product_category_repository)
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -153,33 +147,6 @@ def search_products():
     page_size = request.args.get('page_size', 10, type=int)
     results = search_product_service.search_products(query, page, page_size)
     return jsonify(results), 200
-
-@app.route('/category', methods=['POST'])
-def add_category():
-    data = request.json
-    name = data.get('name')
-    parent_id = data.get('parent_id')
-    category = category_service.create_category(name, parent_id)
-    return jsonify(category_id=category.category_id, name=category.name, parent_id=category.parent_id), 201
-
-@app.route('/category/<int:category_id>', methods=['PUT'])
-def update_category(category_id):
-    data = request.json
-    name = data.get('name')
-    category = category_service.update_category(category_id, name)
-    return jsonify(category_id=category.category_id, name=category.name, parent_id=category.parent_id), 200
-
-@app.route('/categories', methods=['GET'])
-def get_all_categories():
-    categories = category_service.get_all_categories()
-    return jsonify(categories=[{"category_id": cat.category_id, "name": cat.name, "parent_id": cat.parent_id} for cat in categories]), 200
-
-@app.route('/product/<int:product_id>/categories', methods=['POST'])
-def assign_category_to_product(product_id):
-    data = request.json
-    category_id = data.get('category_id')
-    product_category = product_category_service.assign_category_to_product(product_id, category_id)
-    return jsonify(product_id=product_category.product_id, category_id=product_category.category_id), 201
 
 if __name__ == '__main__':
     app.run(debug=True)
