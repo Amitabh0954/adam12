@@ -36,7 +36,3 @@ class CartRepository:
     def remove_item_from_cart(self, cart_item_id: int) -> None:
         # logic to remove a cart item from the database
         pass
-
-    def update_item_quantity(self, cart_item: CartItem) -> None:
-        # logic to update the quantity of an item in the cart in the database
-        pass
