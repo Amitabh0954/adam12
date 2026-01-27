@@ -5,8 +5,6 @@ from backend.repositories.user.user_repository import UserRepository
 from backend.services.user.user_service import UserService
 from backend.repositories.user.session_repository import SessionRepository
 from backend.services.user.session_service import SessionService
-from backend.repositories.user.password_reset_repository import PasswordResetRepository
-from backend.services.user.password_reset_service import PasswordResetService
 
 app = Flask(__name__)
 
@@ -14,8 +12,6 @@ user_repository = UserRepository()
 user_service = UserService(user_repository)
 session_repository = SessionRepository()
 session_service = SessionService(session_repository, user_repository)
-password_reset_repository = PasswordResetRepository()
-password_reset_service = PasswordResetService(password_reset_repository, user_repository)
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -30,6 +26,7 @@ def login_user():
     data = request.json
     email = data.get('email')
     password = data.get('password')
+    # Authenticate user here and create a session
     user = user_repository.get_user_by_email(email)
     if user and user.hashed_password == user_service._hash_password(password):  # Example auth logic
         session_obj = session_service.create_session(user.user_id)
@@ -44,24 +41,6 @@ def validate_session():
     if session_service.validate_session(session_id, timeout):
         return jsonify(message="Session valid"), 200
     return jsonify(message="Session expired or invalid"), 401
-
-@app.route('/request-password-reset', methods=['POST'])
-def request_password_reset():
-    data = request.json
-    email = data.get('email')
-    reset_request = password_reset_service.create_password_reset_request(email)
-    return jsonify(request_id=reset_request.request_id), 200
-
-@app.route('/reset-password', methods=['POST'])
-def reset_password():
-    data = request.json
-    request_id = data.get('request_id')
-    new_password = data.get('new_password')
-    try:
-        password_reset_service.reset_password(request_id, new_password)
-        return jsonify(message="Password reset successful"), 200
-    except ValueError as e:
-        return jsonify(message=str(e)), 400
 
 if __name__ == '__main__':
     app.run(debug=True)
