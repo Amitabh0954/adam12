@@ -1,1 +1,1 @@
-Given the user story for saving the shopping cart state for logged-in users, we will generate the required modules for this new feature according to the provided folder structure and constraints.
+Given the user story for modifying the quantity of products in the shopping cart and ensuring the total price recalculates, we will generate the required modules for this new feature according to the provided folder structure and constraints.
