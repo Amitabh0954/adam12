@@ -17,3 +17,6 @@ class UserRepository:
         if user and user.check_password(password):
             return user
         return None
+
+    def login(self, email: str, password: str) -> Optional[User]:
+        return self.authenticate_user(email, password)
