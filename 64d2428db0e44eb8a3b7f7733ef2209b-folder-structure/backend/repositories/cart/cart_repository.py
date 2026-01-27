@@ -40,7 +40,3 @@ class CartRepository:
     def update_item_quantity(self, cart_item: CartItem) -> None:
         # logic to update the quantity of an item in the cart in the database
         pass
-
-    def save_cart(self, cart: Cart) -> None:
-        # logic to save the current state of the cart
-        pass
