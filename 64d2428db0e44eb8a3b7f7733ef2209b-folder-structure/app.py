@@ -22,7 +22,6 @@ from backend.repositories.cart.cart_repository import CartRepository
 from backend.services.cart.cart_service import CartService
 from backend.services.cart.remove_item_service import RemoveItemService
 from backend.services.cart.modify_item_quantity_service import ModifyItemQuantityService
-from backend.services.cart.save_cart_service import SaveCartService
 
 app = Flask(__name__)
 
@@ -47,7 +46,6 @@ cart_repository = CartRepository()
 cart_service = CartService(cart_repository, product_repository)
 remove_item_service = RemoveItemService(cart_repository, product_repository)
 modify_item_quantity_service = ModifyItemQuantityService(cart_repository, product_repository)
-save_cart_service = SaveCartService(cart_repository)
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -77,14 +75,14 @@ def validate_session():
         return jsonify(message="Session valid"), 200
     return jsonify(message="Session expired or invalid"), 401
 
-@app.route('/request-password-reset', methods(['POST'])
+@app.route('/request-password-reset', methods=['POST'])
 def request_password_reset():
     data = request.json
     email = data.get('email')
     reset_request = password_reset_service.create_password_reset_request(email)
     return jsonify(request_id=reset_request.request_id), 200
 
-@app.route('/reset-password', methods(['POST'])
+@app.route('/reset-password', methods=['POST'])
 def reset_password():
     data = request.json
     request_id = data.get('request_id')
@@ -95,7 +93,7 @@ def reset_password():
     except ValueError as e:
         return jsonify(message=str(e)), 400
 
-@app.route('/profile', methods(['GET'])
+@app.route('/profile', methods=['GET'])
 def get_profile():
     user_id = request.args.get('user_id')
     profile = profile_repository.get_profile_by_user_id(int(user_id))
@@ -123,7 +121,7 @@ def update_profile():
     profile = profile_service.update_profile(user_id, first_name, last_name, phone_number)
     return jsonify(user_id=profile.user_id, first_name=profile.first_name, last_name=profile.last_name, phone_number=profile.phone_number), 200
 
-@app.route('/product', methods(['POST'])
+@app.route('/product', methods=['POST'])
 def add_product():
     data = request.json
     name = data.get('name')
@@ -233,25 +231,6 @@ def modify_item_quantity(cart_id, cart_item_id):
         success = modify_item_quantity_service.modify_item_quantity(cart_id, cart_item_id, quantity)
         if success:
             return jsonify(message="Item quantity modified successfully"), 200
-    except ValueError as e:
-        return jsonify(message=str(e)), 400
-
-@app.route('/cart/<int:cart_id>/save', methods(['POST'])
-def save_cart(cart_id):
-    user_id = request.json.get('user_id')
-    try:
-        success = save_cart_service.save_cart_for_user(user_id, cart_id)
-        if success:
-            return jsonify(message="Cart saved successfully"), 200
-    except ValueError as e:
-        return jsonify(message=str(e)), 400
-
-@app.route('/cart/retrieve', methods(['GET'])
-def retrieve_cart():
-    user_id = request.args.get('user_id')
-    try:
-        cart = save_cart_service.retrieve_cart_for_user(user_id)
-        return jsonify(cart), 200
     except ValueError as e:
         return jsonify(message=str(e)), 400
 
