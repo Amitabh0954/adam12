@@ -21,7 +21,6 @@ from backend.services.product.product_category_service import ProductCategorySer
 from backend.repositories.cart.cart_repository import CartRepository
 from backend.services.cart.cart_service import CartService
 from backend.services.cart.remove_item_service import RemoveItemService
-from backend.services.cart.modify_item_quantity_service import ModifyItemQuantityService
 
 app = Flask(__name__)
 
@@ -45,7 +44,6 @@ product_category_service = ProductCategoryService(product_category_repository)
 cart_repository = CartRepository()
 cart_service = CartService(cart_repository, product_repository)
 remove_item_service = RemoveItemService(cart_repository, product_repository)
-modify_item_quantity_service = ModifyItemQuantityService(cart_repository, product_repository)
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -101,7 +99,7 @@ def get_profile():
         return jsonify(user_id=profile.user_id, first_name=profile.first_name, last_name=profile.last_name, phone_number=profile.phone_number), 200
     return jsonify(message="Profile not found"), 404
 
-@app.route('/profile', methods(['POST'])
+@app.route('/profile', methods=['POST'])
 def create_profile():
     data = request.json
     user_id = data.get('user_id')
@@ -111,7 +109,7 @@ def create_profile():
     profile = profile_service.create_profile(user_id, first_name, last_name, phone_number)
     return jsonify(user_id=profile.user_id, first_name=profile.first_name, last_name=profile.last_name, phone_number=profile.phone_number), 201
 
-@app.route('/profile', methods(['PUT'])
+@app.route('/profile', methods['PUT'])
 def update_profile():
     data = request.json
     user_id = data.get('user_id')
@@ -133,7 +131,7 @@ def add_product():
     except ValueError as e:
         return jsonify(message=str(e)), 400
 
-@app.route('/product/<int:product_id>', methods(['PUT'])
+@app.route('/product/<int:product_id>', methods=['PUT'])
 def update_product(product_id):
     data = request.json
     name = data.get('name')
@@ -145,7 +143,7 @@ def update_product(product_id):
     except ValueError as e:
         return jsonify(message=str(e)), 400
 
-@app.route('/product/<int:product_id>', methods(['DELETE'])
+@app.route('/product/<int:product_id>', methods=['DELETE'])
 def delete_product(product_id):
     try:
         success = delete_product_service.delete_product(product_id)
@@ -154,7 +152,7 @@ def delete_product(product_id):
     except ValueError as e:
         return jsonify(message=str(e)), 400
 
-@app.route('/search', methods(['GET'])
+@app.route('/search', methods=['GET'])
 def search_products():
     query = request.args.get('query')
     page = request.args.get('page', 1, type=int)
@@ -162,7 +160,7 @@ def search_products():
     results = search_product_service.search_products(query, page, page_size)
     return jsonify(results), 200
 
-@app.route('/category', methods(['POST'])
+@app.route('/category', methods=['POST'])
 def add_category():
     data = request.json
     name = data.get('name')
@@ -170,7 +168,7 @@ def add_category():
     category = category_service.create_category(name, parent_id)
     return jsonify(category_id=category.category_id, name=category.name, parent_id=category.parent_id), 201
 
-@app.route('/category/<int:category_id>', methods(['PUT'])
+@app.route('/category/<int:category_id>', methods=['PUT'])
 def update_category(category_id):
     data = request.json
     name = data.get('name')
@@ -182,14 +180,14 @@ def get_all_categories():
     categories = category_service.get_all_categories()
     return jsonify(categories=[{"category_id": cat.category_id, "name": cat.name, "parent_id": cat.parent_id} for cat in categories]), 200
 
-@app.route('/product/<int:product_id>/categories', methods(['POST'])
+@app.route('/product(<int:product_id>categories', methods=['POST'])
 def assign_category_to_product(product_id):
     data = request.json
     category_id = data.get('category_id')
     product_category = product_category_service.assign_category_to_product(product_id, category_id)
     return jsonify(product_id=product_category.product_id, category_id=product_category.category_id), 201
 
-@app.route('/cart', methods(['POST'])
+@app.route('/cart', methods=['POST'])
 def create_cart():
     user_id = request.json.get('user_id')
     if user_id:
@@ -198,7 +196,7 @@ def create_cart():
         cart = cart_service.create_guest_cart()
     return jsonify(cart_id=cart.cart_id, user_id=cart.user_id, is_guest=cart.is_guest), 201
 
-@app.route('/cart/<int:cart_id>/items', methods(['POST'])
+@app.route('/cart/<int:cart_id>/items', methods=['POST'])
 def add_item_to_cart(cart_id):
     data = request.json
     product_id = data.get('product_id')
@@ -209,28 +207,17 @@ def add_item_to_cart(cart_id):
     except ValueError as e:
         return jsonify(message=str(e)), 400
 
-@app.route('/cart/<int:cart_id>/items', methods(['GET'])
+@app.route('/cart/<int:cart_id>/items', methods=['GET'])
 def get_cart_items(cart_id):
     items = cart_service.get_cart_items(cart_id)
     return jsonify(items), 200
 
-@app.route('/cart/<int:cart_id>/items/<int:cart_item_id>', methods(['DELETE'])
+@app.route('/cart/<int:cart_id>/items/<int:cart_item_id>', methods=['DELETE'])
 def remove_item_from_cart(cart_id, cart_item_id):
     try:
         success = remove_item_service.remove_item_from_cart(cart_id, cart_item_id)
         if success:
             return jsonify(message="Item removed from cart successfully"), 200
-    except ValueError as e:
-        return jsonify(message=str(e)), 400
-
-@app.route('/cart/<int:cart_id>/items/<int:cart_item_id>', methods(['PUT'])
-def modify_item_quantity(cart_id, cart_item_id):
-    data = request.json
-    quantity = data.get('quantity')
-    try:
-        success = modify_item_quantity_service.modify_item_quantity(cart_id, cart_item_id, quantity)
-        if success:
-            return jsonify(message="Item quantity modified successfully"), 200
     except ValueError as e:
         return jsonify(message=str(e)), 400
 
