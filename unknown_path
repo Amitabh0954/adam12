@@ -1,1 +1,1 @@
-Given the user story for removing products from the shopping cart and ensuring the total price updates automatically, we will generate the required modules for this new feature according to the provided folder structure and constraints.
+Given the user story for adding products to the shopping cart and ensuring the cart persists across sessions for logged-in users, we will generate the required modules for this new feature according to the provided folder structure and constraints.
