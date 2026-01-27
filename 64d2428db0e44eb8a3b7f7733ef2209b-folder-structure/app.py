@@ -11,8 +11,6 @@ from backend.repositories.user.profile_repository import UserProfileRepository
 from backend.services.user.profile_service import UserProfileService
 from backend.repositories.product.product_repository import ProductRepository
 from backend.services.product.product_service import ProductService
-from backend.services.product.admin_product_service import AdminProductService
-from backend.services.product.admin_delete_product_service import AdminDeleteProductService
 from backend.repositories.product.category_repository import CategoryRepository
 
 app = Flask(__name__)
@@ -27,8 +25,6 @@ profile_repository = UserProfileRepository()
 profile_service = UserProfileService(profile_repository)
 product_repository = ProductRepository()
 product_service = ProductService(product_repository)
-admin_product_service = AdminProductService(product_repository)
-delete_product_service = AdminDeleteProductService(product_repository)
 category_repository = CategoryRepository()
 
 @app.route('/register', methods=['POST'])
@@ -124,17 +120,8 @@ def update_product(product_id):
     description = data.get('description')
     price = data.get('price')
     try:
-        product = admin_product_service.update_product(product_id, name, description, price)
+        product = product_service.update_product(product_id, name, description, price)
         return jsonify(product_id=product.product_id, name=product.name, description=product.description, price=product.price), 200
-    except ValueError as e:
-        return jsonify(message=str(e)), 400
-
-@app.route('/product/<int:product_id>', methods=['DELETE'])
-def delete_product(product_id):
-    try:
-        success = delete_product_service.delete_product(product_id)
-        if success:
-            return jsonify(message="Product deleted successfully"), 200
     except ValueError as e:
         return jsonify(message=str(e)), 400
 
