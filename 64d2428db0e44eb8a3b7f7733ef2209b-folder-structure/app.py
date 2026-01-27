@@ -1,14 +1,12 @@
 # Epic Title: User Account Management
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 from backend.repositories.user.user_repository import UserRepository
 from backend.services.user.user_service import UserService
 from backend.repositories.user.session_repository import SessionRepository
 from backend.services.user.session_service import SessionService
 from backend.repositories.user.password_reset_repository import PasswordResetRepository
 from backend.services.user.password_reset_service import PasswordResetService
-from backend.repositories.user.profile_repository import UserProfileRepository
-from backend.services.user.profile_service import UserProfileService
 
 app = Flask(__name__)
 
@@ -18,8 +16,6 @@ session_repository = SessionRepository()
 session_service = SessionService(session_repository, user_repository)
 password_reset_repository = PasswordResetRepository()
 password_reset_service = PasswordResetService(password_reset_repository, user_repository)
-profile_repository = UserProfileRepository()
-profile_service = UserProfileService(profile_repository)
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -66,34 +62,6 @@ def reset_password():
         return jsonify(message="Password reset successful"), 200
     except ValueError as e:
         return jsonify(message=str(e)), 400
-
-@app.route('/profile', methods=['GET'])
-def get_profile():
-    user_id = request.args.get('user_id')
-    profile = profile_repository.get_profile_by_user_id(int(user_id))
-    if profile:
-        return jsonify(user_id=profile.user_id, first_name=profile.first_name, last_name=profile.last_name, phone_number=profile.phone_number), 200
-    return jsonify(message="Profile not found"), 404
-
-@app.route('/profile', methods=['POST'])
-def create_profile():
-    data = request.json
-    user_id = data.get('user_id')
-    first_name = data.get('first_name')
-    last_name = data.get('last_name')
-    phone_number = data.get('phone_number')
-    profile = profile_service.create_profile(user_id, first_name, last_name, phone_number)
-    return jsonify(user_id=profile.user_id, first_name=profile.first_name, last_name=profile.last_name, phone_number=profile.phone_number), 201
-
-@app.route('/profile', methods=['PUT'])
-def update_profile():
-    data = request.json
-    user_id = data.get('user_id')
-    first_name = data.get('first_name')
-    last_name = data.get('last_name')
-    phone_number = data.get('phone_number')
-    profile = profile_service.update_profile(user_id, first_name, last_name, phone_number)
-    return jsonify(user_id=profile.user_id, first_name=profile.first_name, last_name=profile.last_name, phone_number=profile.phone_number), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
