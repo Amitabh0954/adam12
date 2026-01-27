@@ -13,7 +13,6 @@ from backend.repositories.product.product_repository import ProductRepository
 from backend.services.product.product_service import ProductService
 from backend.services.product.admin_product_service import AdminProductService
 from backend.services.product.admin_delete_product_service import AdminDeleteProductService
-from backend.services.product.search_product_service import SearchProductService
 from backend.repositories.product.category_repository import CategoryRepository
 
 app = Flask(__name__)
@@ -30,7 +29,6 @@ product_repository = ProductRepository()
 product_service = ProductService(product_repository)
 admin_product_service = AdminProductService(product_repository)
 delete_product_service = AdminDeleteProductService(product_repository)
-search_product_service = SearchProductService(product_repository)
 category_repository = CategoryRepository()
 
 @app.route('/register', methods=['POST'])
@@ -139,14 +137,6 @@ def delete_product(product_id):
             return jsonify(message="Product deleted successfully"), 200
     except ValueError as e:
         return jsonify(message=str(e)), 400
-
-@app.route('/search', methods=['GET'])
-def search_products():
-    query = request.args.get('query')
-    page = request.args.get('page', 1, type=int)
-    page_size = request.args.get('page_size', 10, type=int)
-    results = search_product_service.search_products(query, page, page_size)
-    return jsonify(results), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
