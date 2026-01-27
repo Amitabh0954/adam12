@@ -20,7 +20,6 @@ from backend.repositories.product.product_category_repository import ProductCate
 from backend.services.product.product_category_service import ProductCategoryService
 from backend.repositories.cart.cart_repository import CartRepository
 from backend.services.cart.cart_service import CartService
-from backend.services.cart.remove_item_service import RemoveItemService
 
 app = Flask(__name__)
 
@@ -43,7 +42,6 @@ product_category_repository = ProductCategoryRepository()
 product_category_service = ProductCategoryService(product_category_repository)
 cart_repository = CartRepository()
 cart_service = CartService(cart_repository, product_repository)
-remove_item_service = RemoveItemService(cart_repository, product_repository)
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -109,7 +107,7 @@ def create_profile():
     profile = profile_service.create_profile(user_id, first_name, last_name, phone_number)
     return jsonify(user_id=profile.user_id, first_name=profile.first_name, last_name=profile.last_name, phone_number=profile.phone_number), 201
 
-@app.route('/profile', methods['PUT'])
+@app.route('/profile', methods=['PUT'])
 def update_profile():
     data = request.json
     user_id = data.get('user_id')
@@ -175,12 +173,12 @@ def update_category(category_id):
     category = category_service.update_category(category_id, name)
     return jsonify(category_id=category.category_id, name=category.name, parent_id=category.parent_id), 200
 
-@app.route('/categories', methods(['GET'])
+@app.route('/categories', methods=['GET'])
 def get_all_categories():
     categories = category_service.get_all_categories()
     return jsonify(categories=[{"category_id": cat.category_id, "name": cat.name, "parent_id": cat.parent_id} for cat in categories]), 200
 
-@app.route('/product(<int:product_id>categories', methods=['POST'])
+@app.route('/product/<int:product_id>/categories', methods=['POST'])
 def assign_category_to_product(product_id):
     data = request.json
     category_id = data.get('category_id')
@@ -211,15 +209,6 @@ def add_item_to_cart(cart_id):
 def get_cart_items(cart_id):
     items = cart_service.get_cart_items(cart_id)
     return jsonify(items), 200
-
-@app.route('/cart/<int:cart_id>/items/<int:cart_item_id>', methods=['DELETE'])
-def remove_item_from_cart(cart_id, cart_item_id):
-    try:
-        success = remove_item_service.remove_item_from_cart(cart_id, cart_item_id)
-        if success:
-            return jsonify(message="Item removed from cart successfully"), 200
-    except ValueError as e:
-        return jsonify(message=str(e)), 400
 
 if __name__ == '__main__':
     app.run(debug=True)
