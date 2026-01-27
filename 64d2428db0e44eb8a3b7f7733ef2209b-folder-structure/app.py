@@ -1,4 +1,4 @@
-# Epic Title: Shopping Cart Functionality
+# Epic Title: Product Catalog Management
 
 from flask import Flask, request, jsonify
 from backend.repositories.user.user_repository import UserRepository
@@ -18,8 +18,6 @@ from backend.repositories.product.category_repository import CategoryRepository
 from backend.services.product.category_service import CategoryService
 from backend.repositories.product.product_category_repository import ProductCategoryRepository
 from backend.services.product.product_category_service import ProductCategoryService
-from backend.repositories.cart.cart_repository import CartRepository
-from backend.services.cart.cart_service import CartService
 
 app = Flask(__name__)
 
@@ -40,8 +38,6 @@ category_repository = CategoryRepository()
 category_service = CategoryService(category_repository)
 product_category_repository = ProductCategoryRepository()
 product_category_service = ProductCategoryService(product_category_repository)
-cart_repository = CartRepository()
-cart_service = CartService(cart_repository, product_repository)
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -184,31 +180,6 @@ def assign_category_to_product(product_id):
     category_id = data.get('category_id')
     product_category = product_category_service.assign_category_to_product(product_id, category_id)
     return jsonify(product_id=product_category.product_id, category_id=product_category.category_id), 201
-
-@app.route('/cart', methods=['POST'])
-def create_cart():
-    user_id = request.json.get('user_id')
-    if user_id:
-        cart = cart_service.create_cart_for_user(user_id)
-    else:
-        cart = cart_service.create_guest_cart()
-    return jsonify(cart_id=cart.cart_id, user_id=cart.user_id, is_guest=cart.is_guest), 201
-
-@app.route('/cart/<int:cart_id>/items', methods=['POST'])
-def add_item_to_cart(cart_id):
-    data = request.json
-    product_id = data.get('product_id')
-    quantity = data.get('quantity')
-    try:
-        cart_item = cart_service.add_product_to_cart(cart_id, product_id, quantity)
-        return jsonify(cart_item_id=cart_item.cart_item_id, cart_id=cart_item.cart_id, product_id=cart_item.product_id, quantity=cart_item.quantity), 201
-    except ValueError as e:
-        return jsonify(message=str(e)), 400
-
-@app.route('/cart/<int:cart_id>/items', methods=['GET'])
-def get_cart_items(cart_id):
-    items = cart_service.get_cart_items(cart_id)
-    return jsonify(items), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
