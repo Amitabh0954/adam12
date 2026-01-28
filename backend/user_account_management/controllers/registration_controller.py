@@ -21,3 +21,5 @@ def register_user():
         return jsonify(user_schema.dump(user)), 201
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
+
+##### User Schema (for serialization)
