@@ -1,25 +1,27 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash
-from models.user import User
-from db import db
+from models import User, db
 
-
-registration_bp = Blueprint('registration_bp', __name__)
-
+registration_bp = Blueprint('registration', __name__)
 
 @registration_bp.route('/register', methods=['POST'])
-def register_user():
+def register():
     data = request.get_json()
+    if not data or not all(key in data for key in ('username', 'password', 'email')): 
+        return jsonify({'error': 'Missing required fields'}), 400
+    username = data['username']
+    password = data['password']
+    email = data['email']
 
-    if User.query.filter_by(email=data['email']).first() is not None:
-        return jsonify({'message': 'User with that email already exists.'}), 409
+    if User.query.filter_by(username=username).first():
+        return jsonify({'error': 'Username already exists'}), 400
+    if User.query.filter_by(email=email).first():
+        return jsonify({'error': 'Email already registered'}), 400
 
-    new_user = User(
-        email=data['email'],
-        password=generate_password_hash(data['password'], method='sha256')
-    )
+    hashed_password = generate_password_hash(password)
+    new_user = User(username=username, password=hashed_password, email=email)
 
     db.session.add(new_user)
     db.session.commit()
 
-    return jsonify({'message': 'Registered successfully!'}), 201
+    return jsonify({'message': 'User registered successfully'}), 201
